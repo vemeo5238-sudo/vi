@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services &amp; Prices — V Angel Facial &amp; Nail Spa | Springdale &amp; Bentonville, AR</title>
+  <meta name="description" content="Every facial, lash, brow, nail and pedicure service at V Angel with prices and durations. Book online." />
+  <link rel="icon" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="treatments">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__inner">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> / <span>Services</span></nav>
+        <p class="eyebrow">The Treatment Menu</p>
+        <h1>Every treatment<br /><em>at V Angel</em></h1>
+        <span class="divider lotus"></span>
+        <p class="hero__lead">
+          Professional facials, lash extensions, brows, nails and pedicures —
+          every treatment is tailored to your skin and your style.
+        </p>
+        <a href="index.html#tu-van" class="link-gold">Not sure where to start? Take our 1-minute quiz →</a>
+      </div>
+    </section>
+
+    <section class="menu" id="dich-vu">
+      <div class="container">
+        <div class="filter" role="tablist" aria-label="Filter services">
+          <button class="filter__btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter__btn" data-filter="facial" role="tab" aria-selected="false">Facial</button>
+          <button class="filter__btn" data-filter="lash" role="tab" aria-selected="false">Lash</button>
+          <button class="filter__btn" data-filter="brow" role="tab" aria-selected="false">Brow</button>
+          <button class="filter__btn" data-filter="nail" role="tab" aria-selected="false">Nail & Pedicure</button>
+        </div>
+        <p class="menu__count" id="menuCount"></p>
+        <div class="grid" id="treatmentGrid"></div>
+      </div>
+    </section>
+
+    <!-- Platinum Facial Collection -->
+    <section class="section platinum-sec" id="platinum">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow eyebrow--gold">Platinum Facial Collection</p>
+          <h2>Our luxury experience for ultimate results</h2>
+          <p>V Angel's four most luxurious facials, from 75 to 120 minutes.</p>
+        </div>
+        <div class="platinum" data-platinum></div>
+      </div>
+    </section>
+
+    <!-- Bảng giá đầy đủ -->
+    <section class="section" id="bang-gia">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Price List</p>
+          <h2>Full price list</h2>
+          <p>Prices from our in-salon menu (USD). Prices marked “+” or “& up” are starting prices.</p>
+        </div>
+        <div class="filter" role="tablist" aria-label="Choose a price list" id="priceTabs">
+          <button class="filter__btn is-active" data-price="facial">Facial</button>
+          <button class="filter__btn" data-price="lash">Lash</button>
+          <button class="filter__btn" data-price="brow">Brow & Wax</button>
+          <button class="filter__btn" data-price="nail">Nail & Pedicure</button>
+        </div>
+        <div class="pricelist" id="priceList"></div>
+        <p class="pricelist__note">Book — Nails: <a href="tel:+14797172557">(479) 717-2557</a> · Facial, lash, brow: Vi <a href="tel:+18572188777">(857) 218-8777</a> · Llame o envíe mensaje para reservar</p>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Lookbook</p>
+          <h2>Our work</h2>
+          <p>Recent nails, lash looks and treatments. Tap a photo to enlarge.</p>
+        </div>
+        <div class="gallery" data-gallery="looks"></div>
+      </div>
+    </section>
+
+    <!-- Bộ sưu tập Nail -->
+    <section class="section" id="nail-gallery">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Nail Gallery</p>
+          <h2>Our nail collection</h2>
+          <p>Nails our clients have had done at the salon — save the look you love and bring it to your appointment.</p>
+        </div>
+        <div class="gallery gallery--sq" data-gallery="nails"></div>
+        <div class="btn-row btn-row--center" style="margin-top:28px">
+          <a href="#" class="btn btn--gold" data-book="Nail Art Design">Book a nail appointment</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-dark">
+      <div class="container cta-dark__inner">
+        <p class="eyebrow eyebrow--gold">Book your treatment</p>
+        <h2>A treatment made for you</h2>
+        <p>Our team will analyze your skin and tailor your treatment on the day, based on exactly what your skin needs.</p>
+        <a href="#" class="btn btn--gold" data-book>Book Now</a>
+      </div>
+    </section>
+
+    <section class="reviews">
+      <div class="container">
+        <p class="eyebrow">Reviews</p>
+        <h2 class="section-title">What our clients say</h2>
+        <div class="reviews__track" id="reviewList"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script>
+    const grid = $("#treatmentGrid"), countEl = $("#menuCount");
+    function setFilter(f) {
+      $$(".filter__btn[data-filter]").forEach(b => { const on = b.dataset.filter === f; b.classList.toggle("is-active", on); b.setAttribute("aria-selected", on); });
+      const list = f === "all" ? TREATMENTS : TREATMENTS.filter(t => t.category === f);
+      grid.innerHTML = list.map(treatmentCard).join("");
+      countEl.textContent = `${list.length} services`;
+    }
+    $$(".filter__btn[data-filter]").forEach(b => b.addEventListener("click", () => {
+      setFilter(b.dataset.filter);
+      history.replaceState(null, "", b.dataset.filter === "all" ? "treatments.html" : "?loai=" + b.dataset.filter);
+    }));
+    setFilter(LABELS[urlParam("loai")] ? urlParam("loai") : "all");
+
+    /* Bảng giá đầy đủ */
+    const priceList = $("#priceList");
+    function showPrices(k) {
+      $$("#priceTabs .filter__btn").forEach(b => b.classList.toggle("is-active", b.dataset.price === k));
+      priceList.innerHTML = PRICE_MENU[k].map(([title, note, items]) => `
+        <div class="pgroup">
+          <h3>${title}</h3>${note ? `<p class="pgroup__note">${note}</p>` : ""}
+          <ul>${items.map(([n, p, d]) => `<li><span class="pitem__name">${n}${d ? `<small>${d}</small>` : ""}</span><span class="pitem__dots"></span><span class="pitem__price">${p}</span></li>`).join("")}</ul>
+        </div>`).join("");
+    }
+    $("#priceTabs").addEventListener("click", e => { const b = e.target.closest("[data-price]"); if (b) showPrices(b.dataset.price); });
+    showPrices(LABELS[urlParam("loai")] ? urlParam("loai") : "facial");
+    $("#reviewList").innerHTML = REVIEWS.slice(0, 3).map(reviewCard).join("");
+  </script>
+</body>
+</html>
