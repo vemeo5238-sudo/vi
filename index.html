@@ -8,35 +8,80 @@
   <link rel="icon" href="images/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20261116q" />
 </head>
 <body data-page="home">
   <div id="site-header"></div>
 
   <main>
-    <!-- 1. Ảnh bìa -->
-    <section class="cover">
-      <h1 class="sr-only">V Angel Facial &amp; Nail Spa — Your Beauty. Our Passion. Facial, lash, brow, nail &amp; pedicure in Springdale, AR.</h1>
-      <img class="cover__img" src="images/cover-home-2000.webp"
-           srcset="images/cover-home-1000.webp 1000w, images/cover-home-2000.webp 2000w" sizes="100vw"
-           width="2000" height="756" fetchpriority="high"
-           alt="V Angel — Your Beauty. Our Passion. Facials, Lash Extensions, Brows, Nails &amp; Pedicure. 9 years nail artistry, 5 years lash expertise, founded by Vi." />
-    </section>
-    <section class="cover-bar">
-      <div class="container cover-bar__inner">
-        <div class="cover-bar__promo">
-          <span class="pill">First Visit Special</span>
-          <p><strong>$79</strong> <s>$120</s> for your first facial</p>
+    <!-- 1. Trình chiếu đầu trang (mọi cỡ màn hình) -->
+    <section class="mslider" aria-roledescription="carousel" aria-label="V Angel highlights">
+      <div class="mslider__track" id="mTrack">
+        <div class="mslide mslide--dark" role="group" aria-roledescription="slide" aria-label="1 of 2">
+          <span class="jstar jstar--r"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0 C52 38 62 48 100 50 C62 52 52 62 50 100 C48 62 38 52 0 50 C38 48 48 38 50 0Z"/></svg></span>
+          <span class="jstar jstar--b"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0 C52 38 62 48 100 50 C62 52 52 62 50 100 C48 62 38 52 0 50 C38 48 48 38 50 0Z"/></svg></span>
+          <i class="jdot" style="right:7px;top:47%"></i><i class="jdot jdot--gold" style="right:7px;top:66%"></i>
+          <i class="jdot jdot--gold jdot--lg" style="left:16%;bottom:24%"></i><i class="jdot" style="left:16%;bottom:21%"></i>
+          <i class="jdot jdot--gold" style="left:29%;bottom:23%"></i><i class="jdot jdot--gold" style="left:35%;bottom:17%"></i>
+          <i class="jdot jdot--gold" style="right:23%;bottom:30%"></i><i class="jdot" style="right:24%;bottom:20%"></i>
+          <i class="jdot jdot--gold" style="right:10%;bottom:12%"></i><i class="jdot" style="right:7%;bottom:2%"></i>
+          <div class="mslide__content">
+            <p class="j20">20</p>
+            <p class="jrule"><span>Years of V Angel</span></p>
+            <p class="jdia" aria-hidden="true">◇</p>
+            <h2 class="jtitle">Black Friday Spa<br />Offers</h2>
+            <p class="jsub">At our spas · Ends November 30</p>
+            <form class="mslide__search jsearch" action="treatments.html" role="search">
+              <svg class="mslide__search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+              <input type="search" name="q" placeholder="Search treatments, products, or ask a question" aria-label="Search treatments" />
+            </form>
+            <div class="mslide__btns jbtns">
+              <a href="salon.html#uu-dai" class="mbtn mbtn--light">See Spa Offers</a>
+              <a href="#" class="mbtn mbtn--dark" data-book="Basic Glow Facial">Book Now</a>
+            </div>
+          </div>
         </div>
-        <div class="btn-row">
-          <a href="#" class="btn btn--gold" data-book>Book Now</a>
-          <a href="treatments.html#bang-gia" class="btn btn--ghost">View Prices</a>
-          <a href="tel:+14797172557" class="cover-bar__tel">Nail (479) 717-2557</a>
-          <a href="tel:+18572188777" class="cover-bar__tel">Vi (857) 218-8777</a>
+        <div class="mslide mslide--photo" role="group" aria-roledescription="slide" aria-label="2 of 2">
+          <img class="mslide__bg" src="images/slide-room.webp" alt="" aria-hidden="true" />
+          <div class="mslide__content">
+            <p class="mslide__eyebrow">V Angel</p>
+            <h2 class="mslide__title">Your Beauty.<br />Our Passion.</h2>
+            <p class="mslide__text">Luxury facials, lashes, brows and nails in Springdale and Bentonville.</p>
+            <form class="mslide__search" action="treatments.html" role="search">
+              <svg class="mslide__search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+              <input type="search" name="q" placeholder="Search treatments, products, or ask a question" aria-label="Search treatments" />
+            </form>
+            <div class="mslide__btns">
+              <a href="#" class="mbtn mbtn--light" data-book>Book Appointment</a>
+              <a href="treatments.html" class="mbtn mbtn--ghost">Explore Treatments</a>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="mslider__dots" id="mDots" role="tablist" aria-label="Choose slide">
+        <button class="is-active" aria-label="Slide 1"></button><button aria-label="Slide 2"></button>
+      </div>
     </section>
+    <section class="mloc">
+      <p class="mloc__label">Showing availability for <strong id="mLocName">Springdale</strong></p>
+      <div class="mloc__tabs">
+        <button class="is-active" data-mloc="springdale">Springdale</button>
+        <button data-mloc="bentonville">Bentonville</button>
+        <button data-mloc="all">All locations</button>
+      </div>
+    </section>
+    <!-- Tab ưu đãi bên trái + nút nhắn tin (chỉ trên điện thoại) -->
+    <div class="sidetab" id="sideTab">
+      <button class="sidetab__close" aria-label="Close offer" id="sideTabClose">×</button>
+      <a href="#" class="sidetab__btn" data-book="Basic Glow Facial" aria-label="Get 30% off your first facial">GET 30% OFF</a>
+    </div>
+    <a class="chatbub" href="sms:+18572188777" aria-label="Text Vi at (857) 218-8777">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17.5 4 20v-4.2A7 7 0 0 1 3 12c0-4.4 3.8-8 8.5-8S20 7.6 20 12s-3.8 8-8.5 8c-1.6 0-3.1-.4-4.5-1"/><path d="M13 9.5c2.9.3 5 2.4 5 4.9 0 1-.3 1.9-.9 2.7V20l-2.4-1.6"/></svg>
+    </a>
+
+    <!-- 1b. Visit us — 2 chi nhánh (common.js chuyển khối liên hệ vào đây) -->
+    <div id="contact-slot"></div>
 
     <!-- 2. Cam kết -->
     <section class="trust">
@@ -69,7 +114,7 @@
             <div class="cat__body"><h3>Facial</h3><p>Essential, Premium and Platinum facials — from $80, for every skin type.</p><span class="link-gold">View facials →</span></div>
           </a>
           <a href="treatments.html?loai=lash" class="cat reveal">
-            <div class="cat__media"><img src="images/svc-lash-volume.webp" alt="Lash extensions at V Angel" loading="lazy" /></div>
+            <div class="cat__media"><img src="images/svc-lash-closeup.webp" alt="Lash extensions at V Angel" loading="lazy" /></div>
             <div class="cat__body"><h3>Lash</h3><p>Classic, Hybrid and Volume extensions, plus Korean Lash Lift &amp; tint.</p><span class="link-gold">View lashes →</span></div>
           </a>
           <a href="treatments.html?loai=brow" class="cat reveal">
@@ -214,32 +259,6 @@
     </section>
 
     <!-- 10. Về chúng tôi -->
-    <section class="story" id="ve-chung-toi">
-      <div class="container story__inner">
-        <div class="story__media reveal">
-          <div class="story__photo"><img src="images/founder.webp" alt="Vi — founder of V Angel Facial and Nail Spa" loading="lazy" /></div>
-          <div class="story__card"><strong>Vi</strong><span>Founder · V Angel</span></div>
-        </div>
-        <div class="story__text reveal">
-          <p class="eyebrow">Our Story</p>
-          <h2>Hi, I'm Vi — founder of <em>V Angel Facial and Nail Spa.</em></h2>
-          <p>I built this business on my own, step by step. I have owned my nail salon for 9 years, and 2 years ago I opened our facial and spa side — because I wanted to take care of the whole beauty of a woman, not just her nails.</p>
-          <p>Everything I do, I do with my heart. I choose products carefully, I work slowly and honestly, and I always aim for the best possible result for your skin — healthy, glowing, and safe.</p>
-          <p>I also have 5 years of professional lash experience. I don't do one lash style for everyone — I design the lash style for you, based on your eyes, your face, and the look you want: natural, soft, or bold.</p>
-          <p class="story__lead">That is V Angel: real skill, real care, and real results.</p>
-          <ul class="story__stats">
-            <li><strong>9</strong><span>years<br />Nail salon</span></li>
-            <li><strong>5</strong><span>years<br />Lash artistry</span></li>
-            <li><strong>2</strong><span>years<br />Facial &amp; spa</span></li>
-          </ul>
-          <p class="story__sign">Welcome. <span>Your Beauty. Our Passion.</span></p>
-          <div class="btn-row">
-            <a href="#" class="btn btn--gold" data-book>Book with Vi</a>
-            <a href="treatments.html" class="btn btn--outline">View services</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 11. Đặt lịch -->
     <section class="cta-dark">
@@ -257,8 +276,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="data.js"></script>
-  <script src="common.js"></script>
+  <script src="data.js?v=20261116f"></script>
+  <script src="common.js?v=20261116f"></script>
   <script>
     /* Dịch vụ nổi bật */
     const top1 = TREATMENTS[0];
@@ -313,6 +332,39 @@
       $(".quiz__again", box).addEventListener("click", () => step("q1", 1));
     }
     step("q1", 1);
+
+    /* Trình chiếu điện thoại: vuốt tay, tự chuyển 6 giây, chấm tròn */
+    const track = $("#mTrack"), dots = $$("#mDots button");
+    let mIdx = 0, mTimer;
+    const goSlide = i => { mIdx = (i + dots.length) % dots.length; track.scrollTo({ left: mIdx * track.clientWidth, behavior: "smooth" }); };
+    const restart = () => { clearInterval(mTimer); mTimer = setInterval(() => { if (track.offsetParent) goSlide(mIdx + 1); }, 6000); };
+    track.addEventListener("scroll", () => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      if (i !== mIdx) mIdx = i;
+      dots.forEach((d, k) => d.classList.toggle("is-active", k === i));
+    }, { passive: true });
+    dots.forEach((d, k) => d.addEventListener("click", () => { goSlide(k); restart(); }));
+    track.addEventListener("touchstart", () => clearInterval(mTimer), { passive: true });
+    track.addEventListener("touchend", restart, { passive: true });
+    restart();
+
+    /* Chọn chi nhánh ngay dưới trình chiếu */
+    let mLoc = "springdale";
+    function showLoc(id) {
+      const l = LOCATIONS.find(x => x.id === id);
+      mLoc = l ? id : null;   /* "All locations": để khách tự chọn chi nhánh trong popup */
+      $$("[data-mloc]").forEach(b => b.classList.toggle("is-active", b.dataset.mloc === id));
+      $("#mLocName").textContent = l ? l.name : "All locations";
+    }
+    $$("[data-mloc]").forEach(b => b.addEventListener("click", () => showLoc(b.dataset.mloc)));
+    showLoc("springdale");
+    const st = $("#sideTab");
+    if (sessionStorage.getItem("vangel_tab_closed")) st.hidden = true;
+    $("#sideTabClose").addEventListener("click", () => { st.hidden = true; sessionStorage.setItem("vangel_tab_closed", "1"); });
+    /* Nút đặt lịch trong trình chiếu: chọn sẵn chi nhánh đang chọn */
+    $$(".mslider [data-book]").forEach(a => a.addEventListener("click", e => {
+      e.preventDefault(); e.stopPropagation(); openBook(a.dataset.book, a.dataset.book && branchFor(a.dataset.book) ? null : mLoc);
+    }));
   </script>
 </body>
 </html>

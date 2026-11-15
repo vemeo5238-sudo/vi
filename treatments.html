@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20261116q" />
 </head>
 <body data-page="treatments">
   <div id="site-header"></div>
@@ -120,8 +120,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="data.js"></script>
-  <script src="common.js"></script>
+  <script src="data.js?v=20261116f"></script>
+  <script src="common.js?v=20261116f"></script>
   <script>
     const grid = $("#treatmentGrid"), countEl = $("#menuCount");
     function setFilter(f) {
@@ -135,6 +135,21 @@
       history.replaceState(null, "", b.dataset.filter === "all" ? "treatments.html" : "?loai=" + b.dataset.filter);
     }));
     setFilter(LABELS[urlParam("loai")] ? urlParam("loai") : "all");
+
+    /* Tìm kiếm: treatments.html?q=... (từ ô tìm kiếm ở trang chủ / đầu trang) */
+    const q = (urlParam("q") || "").trim();
+    if (q) {
+      const words = q.toLowerCase().split(/\s+/);
+      const hay = t => [t.name, t.desc, LABELS[t.category], ...(t.steps || []), ...(t.benefits || [])].join(" ").toLowerCase();
+      let list = TREATMENTS.filter(t => words.every(w => hay(t).includes(w)));
+      if (!list.length) list = TREATMENTS.filter(t => words.some(w => w.length > 2 && hay(t).includes(w)));
+      $$(".filter__btn[data-filter]").forEach(b => b.classList.remove("is-active"));
+      grid.innerHTML = list.map(treatmentCard).join("");
+      countEl.innerHTML = list.length
+        ? `${list.length} result${list.length > 1 ? "s" : ""} for “${q.replace(/</g, "&lt;")}” · <a href="treatments.html" class="link-gold">Show all</a>`
+        : `No results for “${q.replace(/</g, "&lt;")}”. Call or text Vi at <a href="tel:+18572188777" class="link-gold">(857) 218-8777</a> — or <a href="treatments.html" class="link-gold">see all services</a>.`;
+      $("#dich-vu").scrollIntoView();
+    }
 
     /* Bảng giá đầy đủ */
     const priceList = $("#priceList");

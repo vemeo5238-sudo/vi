@@ -22,30 +22,44 @@ function socialHTML(extra = "") {
 const NAV = [
   ["treatments", "treatments.html", "Services"],
   ["prices", "treatments.html#bang-gia", "Price List"],
-  ["salon", "salon.html", "Locations"],
-  ["about", "index.html#ve-chung-toi", "About"]
+  ["salon", "salon.html", "Locations"]
 ];
 
 $("#site-header").outerHTML = `
   <div class="announce">
-    First Visit Special: facial just <strong>$79</strong> <s>$120</s>
+    First Visit Special: <strong>30% off</strong> your first facial
     <a href="#" data-book>Book now →</a>
   </div>
   <header class="header" id="top">
     <div class="container header__inner">
       <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       <a href="index.html" class="header__logo" aria-label="V Angel - Home">
-        <img src="images/logo.png" alt="V Angel — Facial • Lash • Nail" />
+        <img src="images/logo-header.webp" alt="V Angel — Facial • Lash • Nail" width="700" height="261" />
       </a>
       <nav class="nav" aria-label="Main menu">
         ${NAV.map(([k, h, t]) => `<a href="${h}"${k === PAGE ? ' class="is-current" aria-current="page"' : ""}>${t}</a>`).join("")}
         <a href="#" class="nav__book" data-book>Book an appointment</a>
       </nav>
       <div class="header__right">
+        <button class="hicon" data-search-open aria-label="Search services"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+        <a class="hicon" href="${typeof RIMAN_LINK !== "undefined" ? RIMAN_LINK : "#"}" target="_blank" rel="noopener" aria-label="Shop Riman skincare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a>
+        <a class="hicon" href="salon.html" aria-label="Locations &amp; contact"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
         <a href="#" class="btn btn--gold header__cta" data-book>Book Now</a>
       </div>
     </div>
-  </header>`;
+  </header>
+  <div class="search-panel" id="searchPanel" aria-hidden="true">
+    <form class="search-panel__form" action="treatments.html" role="search">
+      <input type="search" name="q" placeholder="Search treatments, products, or ask a question" aria-label="Search treatments" />
+      <button type="submit" class="btn btn--gold">Search</button>
+      <button type="button" class="search-panel__close" data-search-close aria-label="Close search">×</button>
+    </form>
+  </div>`;
+/* Ô tìm kiếm ở đầu trang */
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-search-open]")) { const p = $("#searchPanel"); p.classList.add("is-open"); p.setAttribute("aria-hidden", "false"); setTimeout(() => $("input", p).focus(), 50); }
+  if (e.target.closest("[data-search-close]")) { const p = $("#searchPanel"); p.classList.remove("is-open"); p.setAttribute("aria-hidden", "true"); }
+});
 
 /* ---------- Footer + popup + giỏ hàng ---------- */
 $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
@@ -55,53 +69,81 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
         <p class="eyebrow">Visit us</p>
         <h2>${SALON.name} — 2 locations</h2>
       </div>
-      <div class="locs">${LOCATIONS.map(locationCard).join("")}</div>
-      <div class="contact__bar">
-        <a href="tel:${SALON.phoneLink}" class="cphone"><span>Nails</span><strong>${SALON.phone}</strong></a>
-        <a href="tel:${SALON.ownerLink}" class="cphone"><span>Owner — Vi · Facial, Lash, Skincare</span><strong>${SALON.owner}</strong></a>
-        ${socialHTML()}
-      </div>
+      <div class="locs locs--photo">${LOCATIONS.map(locPhotoCard).join("")}</div>
     </div>
   </section>`) + `
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__top">
-        <div class="footer__brand">
-          <a href="index.html" class="footer__logo"><img src="images/logo.png" alt="V Angel" loading="lazy" /></a>
-          <p class="footer__slogan">Your Beauty. Our Passion.</p>
-          ${socialHTML("social-icons--dark")}
-        </div>
-        <div class="footer__cols">
-          <details class="footer__col" open>
-            <summary>Services</summary>
-            <a href="treatments.html?loai=facial">Facial</a>
-            <a href="treatments.html?loai=lash">Lash</a>
-            <a href="treatments.html?loai=brow">Brow</a>
-            <a href="treatments.html?loai=nail">Nail & Pedicure</a>
-          </details>
-          <details class="footer__col" open>
-            <summary>V Angel</summary>
-            <a href="salon.html#springdale">Springdale location</a>
-            <a href="salon.html#bentonville">Bentonville location</a>
-            <a href="index.html#ve-chung-toi">About</a>
-            <a href="#" data-book>Book now</a>
-          </details>
-          <details class="footer__col" open>
-            <summary>Help</summary>
-            <a href="salon.html#faq">FAQ</a>
-            <a href="tel:${SALON.phoneLink}">Nails: ${SALON.phone}</a>
-            <a href="tel:${SALON.ownerLink}">Vi: ${SALON.owner}</a>
-            <a href="treatments.html#bang-gia">Full price list</a>
-          </details>
+  <footer class="fx">
+    <div class="fx__wrap">
+      <div class="fx__founder">
+        <img src="images/founder.webp" alt="Vi, founder of V Angel" loading="lazy" />
+        <div>
+          <p class="fx__name">Vi</p>
+          <p class="fx__role">Founder &amp; Owner</p>
+          <a href="#" class="fx__meet" data-meet>Meet Vi</a>
         </div>
       </div>
-      <div class="footer__bottom">
-        <p>© ${new Date().getFullYear()} V Angel. All rights reserved.</p>
-        <a href="#top">Back to top ↑</a>
+      <div class="fx__cols">
+        <details class="fx__acc">
+          <summary>Services<span class="fx__plus" aria-hidden="true"></span></summary>
+          <a href="treatments.html?loai=facial">Facials</a>
+          <a href="treatments.html?loai=lash">Lash extensions &amp; lash lift</a>
+          <a href="treatments.html?loai=brow">Brows &amp; waxing</a>
+          <a href="treatments.html?loai=nail">Nails &amp; pedicures</a>
+          <a href="treatments.html#bang-gia">Full price list</a>
+        </details>
+        <details class="fx__acc">
+          <summary>Spas<span class="fx__plus" aria-hidden="true"></span></summary>
+          <a href="salon.html#springdale">Springdale</a>
+          <a href="salon.html#bentonville">Bentonville</a>
+          <a href="salon.html#uu-dai">Spa offers</a>
+          <a href="#" data-book>Book an appointment</a>
+        </details>
+        <details class="fx__acc">
+          <summary>Shop<span class="fx__plus" aria-hidden="true"></span></summary>
+          <a href="${typeof RIMAN_LINK !== "undefined" ? RIMAN_LINK : "#"}" target="_blank" rel="noopener">Riman Incellderm skincare ↗</a>
+          <a href="index.html#riman">Featured products</a>
+          <a href="sms:${SALON.ownerLink}">Ask Vi for a recommendation</a>
+        </details>
+        <details class="fx__acc">
+          <summary>Help<span class="fx__plus" aria-hidden="true"></span></summary>
+          <a href="salon.html#faq">FAQ</a>
+          <a href="tel:${SALON.phoneLink}">Nails: ${SALON.phone}</a>
+          <a href="tel:${SALON.ownerLink}">Facial, lash &amp; skincare (Vi): ${SALON.owner}</a>
+          <a href="salon.html">Directions &amp; hours</a>
+        </details>
+      </div>
+      <div class="fx__social">${socialHTML()}</div>
+      <div class="fx__disc">
+        <p class="fx__disc-title">Disclaimer</p>
+        <p class="fx__disc-text" id="fxDisc">Results vary from person to person and are not guaranteed. Prices shown are starting prices and may change depending on length, design, add-ons and the condition of your skin, lashes or nails — we will always confirm your price before we begin. Riman Incellderm products are offered through an independent Riman shop link; product information is available on request. Our facial and skincare services are cosmetic and are not a substitute for medical advice. Please tell us about any allergies, medications or skin conditions before your treatment.</p>
+        <button class="fx__more" id="fxMore" aria-expanded="false">Read more</button>
       </div>
     </div>
+    <div class="fx__bottom">
+      <nav class="fx__legal" aria-label="Footer">
+        <a href="treatments.html#bang-gia">Price list</a><a href="salon.html">Locations</a><a href="salon.html#faq">FAQ</a><a href="#" data-book>Book now</a><a href="#top">Back to top</a>
+      </nav>
+      <p class="fx__copy">© ${new Date().getFullYear()} V Angel Facial &amp; Nail Spa</p>
+    </div>
   </footer>
+
+  <!-- Câu chuyện của Vi -->
+  <div class="modal" id="meetModal" aria-hidden="true">
+    <div class="modal__backdrop" data-meet-close></div>
+    <div class="modal__box meet" role="dialog" aria-modal="true" aria-labelledby="meetTitle">
+      <button class="modal__close" aria-label="Close" data-meet-close>×</button>
+      <img class="meet__photo" src="images/founder.webp" alt="Vi, founder of V Angel" loading="lazy" />
+      <p class="eyebrow">Our Story</p>
+      <h2 id="meetTitle">Hi, I'm Vi — founder of V Angel Facial and Nail Spa.</h2>
+      <p>I built this business on my own, step by step. I have owned my nail salon for 9 years, and 2 years ago I opened our facial and spa side — because I wanted to take care of the whole beauty of a woman, not just her nails.</p>
+      <p>Everything I do, I do with my heart. I choose products carefully, I work slowly and honestly, and I always aim for the best possible result for your skin — healthy, glowing, and safe.</p>
+      <p>I also have 5 years of professional lash experience. I don't do one lash style for everyone — I design the lash style for you, based on your eyes, your face, and the look you want: natural, soft, or bold.</p>
+      <p class="meet__lead">That is V Angel: real skill, real care, and real results.</p>
+      <p class="meet__sign">Welcome. <span>Your Beauty. Our Passion.</span></p>
+      <a href="#" class="btn btn--gold" data-book>Book with Vi</a>
+    </div>
+  </div>
 
   <a href="#" class="sticky-book" data-book>Book Now</a>
 
@@ -136,6 +178,42 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
       </div>
     </div>
   </div>`;
+
+/* Chân trang: máy tính luôn mở 4 cột, điện thoại bấm "+" để mở */
+const fxDesk = matchMedia("(min-width: 901px)");
+const fxSync = () => $$(".fx__acc").forEach(d => d.open = fxDesk.matches);
+fxSync(); fxDesk.addEventListener("change", fxSync);
+$$(".fx__acc summary").forEach(su => su.addEventListener("click", e => { if (fxDesk.matches) e.preventDefault(); }));
+
+/* ---------- Meet Vi + Disclaimer "Read more" ---------- */
+document.addEventListener("click", e => {
+  const m = $("#meetModal");
+  if (e.target.closest("[data-meet]")) { e.preventDefault(); m.classList.add("is-open"); m.setAttribute("aria-hidden", "false"); lockScroll(true); }
+  if (e.target.closest("[data-meet-close]")) { m.classList.remove("is-open"); m.setAttribute("aria-hidden", "true"); lockScroll(false); }
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#meetModal").classList.contains("is-open")) { $("#meetModal").classList.remove("is-open"); lockScroll(false); } });
+$("#fxMore").addEventListener("click", () => {
+  const open = $("#fxDisc").classList.toggle("is-open");
+  $("#fxMore").textContent = open ? "Read less" : "Read more"; $("#fxMore").setAttribute("aria-expanded", open);
+});
+
+/* Trang có chỗ đặt sẵn (#contact-slot): đưa khối "Visit us — 2 locations" lên đó */
+if ($("#contact-slot") && $("#lien-he")) $("#contact-slot").replaceWith($("#lien-he"));
+
+/* ---------- Thẻ chi nhánh kiểu ảnh nền (theo mẫu) ---------- */
+function locPhotoCard(l) {
+  return `
+    <article class="lphoto">
+      <img class="lphoto__bg" src="${l.photo}" alt="" aria-hidden="true" loading="lazy" />
+      <div class="lphoto__body">
+        <h3 class="lphoto__city">${l.name}</h3>
+        <p>${l.address}</p>
+        ${(l.phones || []).map(([lbl, num, link]) => `<p><a href="tel:${link}">${num}</a> <span>· ${lbl}</span></p>`).join("")}
+        <p class="lphoto__note">${l.walkin ? "Nail walk-ins welcome" : "By appointment only"}</p>
+        <a class="lphoto__visit" href="salon.html#${l.id}">Visit this spa</a>
+      </div>
+    </article>`;
+}
 
 /* ---------- Thẻ chi nhánh ---------- */
 function locationCard(l) {

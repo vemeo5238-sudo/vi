@@ -23,14 +23,14 @@ const SALON = {
 /* ---------- Chi nhánh ----------
    cats: nhóm dịch vụ có tại chi nhánh (dùng để lọc ô chọn dịch vụ khi đặt lịch) */
 const LOCATIONS = [
-  { id: "springdale", label: "Location 1", name: "Springdale",
+  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=2", phones: [["Nails", "(479) 717-2557", "+14797172557"], ["Facial & lash", "(857) 218-8777", "+18572188777"]],
     address: "1602 E Robinson Ave #K, Springdale, AR 72764",
     services: ["Nail", "Facial", "Lash", "Lash Lift", "Skincare"],
     cats: ["nail", "facial", "lash", "brow"],
     policy: "Nails: walk-ins welcome or book ahead. Facial, lash, lash lift and skincare: by appointment only.",
     walkin: true,
     hours: [["Monday – Friday", "9:30 AM – 7:00 PM"], ["Saturday", "9:30 AM – 6:00 PM"], ["Sunday", "Closed (facials by appointment)"]] },
-  { id: "bentonville", label: "Location 2", name: "Bentonville",
+  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=2", phones: [["Appointments", "(857) 218-8777", "+18572188777"]],
     address: "Room 6, 1724 SE Moberly Ln, Bentonville, AR 72712",
     services: ["Facial", "Lash", "Brow Lamination", "Lash Lift"],
     cats: ["facial", "lash", "brow"],
@@ -70,11 +70,11 @@ const TREATMENTS = [
     steps: [] },
 
   // LASH
-  { category: "lash", name: "Classic Full Set", duration: "", price: "$110+", badge: "", image: "images/svc-lash-classic.webp",
+  { category: "lash", name: "Classic Full Set", duration: "", price: "$110+", badge: "", image: "images/svc-lash-eye.webp",
     desc: "One extension per natural lash — soft, light and natural, just like your own lashes.", steps: [] },
   { category: "lash", name: "Hybrid Full Set", duration: "", price: "$140+", badge: "", image: "images/svc-lash-hybrid.webp",
     desc: "A mix of classic and volume for medium fullness with beautiful texture.", steps: [] },
-  { category: "lash", name: "Volume Full Set", duration: "", price: "$170+", badge: "", popular: true, image: "images/svc-lash-volume.webp",
+  { category: "lash", name: "Volume Full Set", duration: "", price: "$170+", badge: "", popular: true, image: "images/svc-lash-closeup.webp",
     desc: "Full, fluffy volume lashes with a lifted curl — still lightweight.", steps: [] },
   { category: "lash", name: "Cluster Lashes (Temporary)", duration: "", price: "$50+", badge: "", image: "",
     desc: "Temporary cluster lashes — a quick glam look for parties and events.", steps: [] },
@@ -185,7 +185,7 @@ const REVIEWS = [
 
 /* ---------- Điểm nổi bật (trang Salon) ---------- */
 const OFFERS = [
-  { big: "$79", title: "First Visit Special", sub: "Facial for first-time guests — regularly $120" },
+  { big: "30% OFF", title: "First Visit Special", sub: "Your first facial at V Angel" },
   { big: "$220+", title: "Platinum Collection", sub: "4 luxury facial packages, 75–120 min" },
   { big: "$15", title: "LED Light Therapy", sub: "Add-on for any facial treatment" },
   { big: "$18+", title: "Kid Menu", sub: "Manicures and pedicures for kids" }
@@ -226,8 +226,7 @@ const GALLERY = {
   looks: [
     ["look-1", "Emerald Gilded — nail art"], ["look-5", "Cateye Hybrid lash"], ["look-2", "Ocean Breeze — nail art"],
     ["look-6", "Dolly Wispy lash"], ["look-3", "Timeless Grace — nail art"], ["look-8", "Light in Balance — LED"],
-    ["look-4", "Citrus Pop — nail art"], ["look-9", "The Quiet Touch — facial"], ["look-7", "Violet Restore — LED"],
-    ["look-10", "The Quiet Craft — lash extensions"]
+    ["look-4", "Citrus Pop — nail art"], ["look-9", "The Quiet Touch — facial"], ["look-7", "Violet Restore — LED"]
   ],
   space: [
     ["space-3", "The Beauty Room"], ["space-1", "Private Facial Room"], ["space-5", "Inside the Ritual"],
