@@ -22,15 +22,19 @@ const SALON = {
 
 /* ---------- Chi nhánh ----------
    cats: nhóm dịch vụ có tại chi nhánh (dùng để lọc ô chọn dịch vụ khi đặt lịch) */
+/* Form "Free consultation": dán link nhận form vào đây (VD https://formsubmit.co/ajax/email-cua-tiem
+   hoặc link Formspree). Để trống thì khách gửi bằng tin nhắn SMS tới số của Vi. */
+const CONSULT_ENDPOINT = "";
+
 const LOCATIONS = [
-  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=2", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
+  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=2", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "1602 E Robinson Ave #K, Springdale, AR 72764",
     services: ["Nail", "Facial", "Lash", "Lash Lift", "Skincare"],
     cats: ["nail", "facial", "lash", "brow"],
     policy: "Nails: walk-ins welcome or book ahead. Facial, lash, lash lift and skincare: by appointment only.",
     walkin: true,
     hours: [["Monday – Friday", "9:30 AM – 7:00 PM"], ["Saturday", "9:30 AM – 6:00 PM"], ["Sunday", "Closed (facials by appointment)"]] },
-  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=3", phones: [["Facial, Lash & Brows", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
+  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=3", phones: [["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "Room 6, 1724 SE Moberly Ln, Bentonville, AR 72712",
     services: ["Facial", "Lash", "Brow Lamination", "Lash Lift"],
     cats: ["facial", "lash", "brow"],

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261117h" />
+  <link rel="stylesheet" href="style.css?v=20261118j" />
 </head>
 <body data-page="home">
   <div id="site-header"></div>
@@ -27,11 +27,11 @@
           <i class="jdot jdot--gold" style="right:23%;bottom:30%"></i><i class="jdot" style="right:24%;bottom:20%"></i>
           <i class="jdot jdot--gold" style="right:10%;bottom:12%"></i><i class="jdot" style="right:7%;bottom:2%"></i>
           <div class="mslide__content">
-            <p class="j20">20</p>
+            <p class="j20">9</p>
             <p class="jrule"><span>Years of V Angel</span></p>
             <p class="jdia" aria-hidden="true">◇</p>
-            <h2 class="jtitle">Black Friday Spa<br />Offers</h2>
-            <p class="jsub">At our spas · Ends November 30</p>
+            <h2 class="jtitle"><span class="jw jw--one">Holiday Special Offer</span></h2>
+            <p class="jsub">At our spas · Ends December 31</p>
             <form class="mslide__search jsearch" action="treatments.html" role="search">
               <svg class="mslide__search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
               <input type="search" name="q" placeholder="Search treatments, products, or ask a question" aria-label="Search treatments" />
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="mslide mslide--photo" role="group" aria-roledescription="slide" aria-label="2 of 2">
-          <img class="mslide__bg mslide__bg--bs" src="images/slide-beauty-space.webp" alt="" aria-hidden="true" />
+          <img class="mslide__bg mslide__bg--bs" src="images/slide-spa-room.webp" alt="" aria-hidden="true" />
           <div class="mslide__content">
             <p class="mslide__eyebrow">V Angel</p>
             <h2 class="mslide__title">Your Beauty.<br />Our Passion.</h2>
@@ -125,6 +125,48 @@
             <div class="cat__media"><img src="images/svc-nail-art.webp" alt="Nail art at V Angel" loading="lazy" /></div>
             <div class="cat__body"><h3>Nail</h3><p>Gel, acrylic, dip powder, nail art and 6 relaxing pedicures.</p><span class="link-gold">View nails →</span></div>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10b. Để lại thông tin tư vấn -->
+    <section class="section consult" id="consult">
+      <div class="container consult__wrap">
+        <div class="consult__intro reveal">
+          <p class="eyebrow eyebrow--gold">Free consultation</p>
+          <h2>Not sure which treatment <em>is right for you?</em></h2>
+          <p>Leave your email, phone number and the service you're interested in. Vi will reach out personally with advice and a plan made for your skin, lashes or nails.</p>
+          <ul class="consult__ticks">
+            <li>Free, no obligation</li>
+            <li>We reply within 24 hours</li>
+            <li>English &amp; Vietnamese spoken</li>
+          </ul>
+          <p class="consult__call">Prefer to talk now? Call or text Vi <a href="tel:+18572188777">(857) 218-8777</a></p>
+        </div>
+        <form class="consult__form reveal" id="consultForm" novalidate>
+          <div class="consult__row">
+            <label>Full name<input type="text" name="name" autocomplete="name" placeholder="Your name" /></label>
+            <label>Phone number *<input type="tel" name="phone" autocomplete="tel" required placeholder="(479) 000-0000" pattern="[0-9 +.\(\)\-]{10,20}" /></label>
+          </div>
+          <label>Email *<input type="email" name="email" autocomplete="email" required placeholder="you@example.com" /></label>
+          <label>Service you'd like advice on *<select name="service" id="consultService" required></select></label>
+          <label>Preferred location<select name="location">
+            <option value="Springdale">Springdale</option>
+            <option value="Bentonville">Bentonville</option>
+            <option value="Either">Either location</option>
+          </select></label>
+          <label>Your question <span>(optional)</span><textarea name="message" rows="3" placeholder="Tell us about your skin concerns or the look you want…"></textarea></label>
+          <input type="text" name="_honey" class="consult__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <p class="consult__err" id="consultErr" role="alert" hidden></p>
+          <button type="submit" class="btn btn--gold consult__btn">Request my free consultation</button>
+          <p class="consult__fine">By submitting, you agree to be contacted by V Angel about your request. We never share your information.</p>
+        </form>
+        <div class="consult__done" id="consultDone" hidden>
+          <p class="consult__done-icon" aria-hidden="true">&#10022;</p>
+          <h3>Thank you!</h3>
+          <p id="consultDoneText">We've received your request. Vi will contact you within 24 hours.</p>
+          <a class="btn btn--gold" id="consultSms" hidden>Send my request by text</a>
+          <button type="button" class="link-gold" id="consultAgain">Send another request</button>
         </div>
       </div>
     </section>
@@ -276,8 +318,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="data.js?v=20261118a"></script>
-  <script src="common.js?v=20261117c"></script>
+  <script src="data.js?v=20261118c"></script>
+  <script src="common.js?v=20261118b"></script>
   <script>
     /* Dịch vụ nổi bật (4 khối, ảnh xen kẽ trái/phải) — nội dung theo menu in tại salon */
     const FEATURED = [
@@ -349,15 +391,69 @@
     }
     step("q1", 1);
 
+    /* Form để lại thông tin tư vấn */
+    (function () {
+      const f = $("#consultForm"), sel = $("#consultService"), err = $("#consultErr"), done = $("#consultDone");
+      const groups = Object.keys(LABELS).map(k => `<optgroup label="${LABELS[k]}">` +
+        TREATMENTS.filter(t => t.category === k).map(t => `<option>${t.name}</option>`).join("") + "</optgroup>").join("");
+      sel.innerHTML = '<option value="">Choose a service…</option>' + groups +
+        '<optgroup label="Other"><option>Permanent Makeup (PMU)</option><option>Skincare products (Riman)</option><option>VIP Member Package</option><option>Not sure — please advise me</option></optgroup>';
+      const msg = d => `Hi Vi, I'd like a free consultation.\nName: ${d.name || "-"}\nPhone: ${d.phone}\nEmail: ${d.email}\nService: ${d.service}\nLocation: ${d.location}` + (d.message ? `\nQuestion: ${d.message}` : "");
+      const showDone = (text, sms) => {
+        f.hidden = true; done.hidden = false;
+        $("#consultDoneText").textContent = text;
+        const a = $("#consultSms"); a.hidden = !sms; if (sms) a.href = sms;
+        done.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      f.addEventListener("submit", async e => {
+        e.preventDefault();
+        err.hidden = true;
+        $$("input,select", f).forEach(i => i.classList.remove("is-bad"));
+        const bad = $$("[required]", f).filter(i => !i.checkValidity());
+        if (bad.length) {
+          bad.forEach(i => i.classList.add("is-bad"));
+          err.textContent = "Please enter a valid phone number, email and the service you'd like advice on.";
+          err.hidden = false; bad[0].focus(); return;
+        }
+        const d = Object.fromEntries(new FormData(f));
+        if (d._honey) return;
+        delete d._honey;
+        const btn = $(".consult__btn", f);
+        if (CONSULT_ENDPOINT) {
+          btn.disabled = true; btn.textContent = "Sending…";
+          try {
+            const r = await fetch(CONSULT_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify({ ...d, _subject: "New consultation request — V Angel website" }) });
+            if (!r.ok) throw new Error(r.status);
+            showDone("We've received your request. Vi will contact you within 24 hours.");
+          } catch (x) {
+            showDone("We couldn't send your request online. Tap below to send it to Vi by text instead.", "sms:+18572188777?&body=" + encodeURIComponent(msg(d)));
+          } finally { btn.disabled = false; btn.textContent = "Request my free consultation"; }
+        } else {
+          const sms = "sms:+18572188777?&body=" + encodeURIComponent(msg(d));
+          showDone("Almost done! Tap the button below to send your request to Vi by text — your details are already filled in.", sms);
+        }
+      });
+      $("#consultAgain").addEventListener("click", () => { f.reset(); f.hidden = false; done.hidden = true; });
+    })();
+
     /* Trình chiếu điện thoại: vuốt tay, tự chuyển 6 giây, chấm tròn */
     const track = $("#mTrack"), dots = $$("#mDots button");
     let mIdx = 0, mTimer;
     const goSlide = i => { mIdx = (i + dots.length) % dots.length; track.scrollTo({ left: mIdx * track.clientWidth, behavior: "smooth" }); };
     const restart = () => { clearInterval(mTimer); mTimer = setInterval(() => { if (track.offsetParent) goSlide(mIdx + 1); }, 6000); };
+    const mSlides = $$(".mslide", track);
+    let mOn = -1;
+    const playSlide = i => {
+      if (i === mOn) return; mOn = i;
+      mSlides.forEach((s, k) => { s.classList.remove("is-on"); if (k === i) { void s.offsetWidth; s.classList.add("is-on"); } });
+    };
+    playSlide(0);
     track.addEventListener("scroll", () => {
       const i = Math.round(track.scrollLeft / track.clientWidth);
       if (i !== mIdx) mIdx = i;
       dots.forEach((d, k) => d.classList.toggle("is-active", k === i));
+      playSlide(i);
     }, { passive: true });
     dots.forEach((d, k) => d.addEventListener("click", () => { goSlide(k); restart(); }));
     track.addEventListener("touchstart", () => clearInterval(mTimer), { passive: true });

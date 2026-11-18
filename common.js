@@ -457,3 +457,58 @@ if ($("[data-videos]")) {
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && vm.classList.contains("is-open")) closeVm(); });
 }
+
+
+/* ---------- Nút dịch ngôn ngữ (góc phải dưới, dùng Google Translate) ---------- */
+(function () {
+  const LANGS = [
+    ["en", "English", "EN"], ["vi", "Tiếng Việt", "VI"], ["es", "Español", "ES"], ["mh", "Kajin M̧ajeļ", "MH"],
+    ["zh-CN", "中文 (简体)", "中文"], ["ko", "한국어", "KO"], ["tl", "Tagalog", "TL"], ["lo", "ພາສາລາວ", "LO"],
+    ["fr", "Français", "FR"], ["pt", "Português", "PT"], ["de", "Deutsch", "DE"], ["hi", "हिन्दी", "HI"],
+    ["ja", "日本語", "JA"], ["ar", "العربية", "AR"]
+  ];
+  const getLang = () => { const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]+\/([^;]+)/); return m ? decodeURIComponent(m[1]) : "en"; };
+  const setCookie = v => {
+    const host = location.hostname, parts = host.split(".");
+    const doms = ["", host]; if (parts.length > 1) doms.push("." + parts.slice(-2).join("."));
+    doms.forEach(d => { document.cookie = "googtrans=" + v + ";path=/" + (d ? ";domain=" + d : "") + (v ? "" : ";expires=Thu, 01 Jan 1970 00:00:00 GMT"); });
+  };
+  const cur = getLang();
+  const curShort = (LANGS.find(l => l[0] === cur) || LANGS[0])[2];
+
+  const box = document.createElement("div");
+  box.className = "lang notranslate"; box.setAttribute("translate", "no");
+  box.innerHTML = `
+    <div class="lang__menu" id="langMenu" role="menu" aria-label="Choose language" hidden>
+      <p class="lang__head">Choose your language</p>
+      ${LANGS.map(([c, n]) => `<button type="button" role="menuitem" data-lang="${c}" class="${c === cur ? "is-on" : ""}"><span>${n}</span>${c === cur ? "<i>✓</i>" : ""}</button>`).join("")}
+    </div>
+    <button type="button" class="lang__btn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" title="Translate this page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9M12 3C9.4 5.6 8.2 8.6 8.2 12s1.2 6.4 3.8 9"/></svg>
+      <span class="lang__code">${curShort}</span>
+    </button>
+    <div id="gt_el" class="lang__gt"></div>`;
+  document.body.appendChild(box);
+  const btn = $(".lang__btn", box), menu = $("#langMenu", box);
+  const toggle = on => { menu.hidden = !on; btn.setAttribute("aria-expanded", on); box.classList.toggle("is-open", on); };
+  btn.addEventListener("click", e => { e.stopPropagation(); toggle(menu.hidden); });
+  document.addEventListener("click", e => { if (!box.contains(e.target)) toggle(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") toggle(false); });
+
+  menu.addEventListener("click", e => {
+    const b = e.target.closest("[data-lang]"); if (!b) return;
+    const code = b.dataset.lang;
+    toggle(false);
+    if (code === getLang()) return;
+    if (code === "en") { setCookie(""); location.reload(); return; }
+    setCookie("/en/" + code);
+    location.reload();
+  });
+
+  window.vaGtInit = function () {
+    new google.translate.TranslateElement({ pageLanguage: "en", includedLanguages: LANGS.map(l => l[0]).join(","), autoDisplay: false }, "gt_el");
+  };
+  const s = document.createElement("script");
+  s.src = "https://translate.google.com/translate_a/element.js?cb=vaGtInit"; s.async = true;
+  document.body.appendChild(s);
+})();
