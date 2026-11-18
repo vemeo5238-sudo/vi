@@ -1299,3 +1299,51 @@ p { margin: 0 0 1em; }
 .header__logo img { height: 50px; width: auto; mix-blend-mode: normal; filter: none; }
 @media (max-width: 900px) { .header__logo img { height: 44px; } }
 @media (max-width: 760px) { .header__logo img { height: 40px; } }
+
+/* Thẻ chi nhánh: mỗi dịch vụ một dòng — tên · số điện thoại · cách đặt lịch */
+.lphoto__body > p:first-of-type { margin-bottom: 20px; }
+.lphoto__svcs { display: grid; gap: 14px; margin: 0 0 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.35); }
+.lphoto__svc { display: grid; gap: 2px; }
+.lphoto__svc strong { font-size: 11.5px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+.lphoto__svc a { font-size: 18px; color: #fff; }
+.lphoto__svc em { font-style: normal; font-size: 13px; color: #f1dfb7; }
+.mslide__bg--bs { object-position: 55% 60%; filter: none; }
+.feature__list { list-style: none; padding: 0; margin: 4px 0 28px; display: grid; gap: 10px; }
+.feature__list li { position: relative; padding-left: 26px; font-size: 16px; color: var(--text); }
+.feature__list li::before { content: ""; position: absolute; left: 0; top: .32em; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f1d48a, #c9a227 60%, #9c7a17); box-shadow: inset 0 0 0 2px rgba(255,255,255,.35); }
+
+/* ===== Dịch vụ nổi bật: nhiều khối, ảnh xen kẽ ===== */
+.features { display: grid; gap: 28px; }
+.feature--flip .feature__media { order: 2; }
+@media (max-width: 900px) { .feature--flip .feature__media { order: 0; } }
+
+/* ===== Platinum: thay ảnh bằng chữ "VIP Member Package" nổi bật ===== */
+.platinum__vip {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 24px;
+  background: radial-gradient(ellipse 70% 45% at 50% 42%, rgba(201,162,39,.22), transparent 70%), #0d0d0d;
+  border: 1px solid rgba(201,162,39,.55); box-shadow: inset 0 0 0 8px #0d0d0d, inset 0 0 0 9px rgba(201,162,39,.3);
+}
+.vip__crown { font-size: 54px; line-height: 1; margin-bottom: 18px;
+  background: linear-gradient(180deg, #f6e3a8, #c9a227 60%, #8f6d12); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.vip__kicker { font: 500 12px "Inter", var(--sans); letter-spacing: .5em; text-transform: uppercase; color: #e9dcbc; margin: 0 0 16px; padding-left: .5em; }
+.vip__title {
+  font-family: "Playfair Display", var(--serif); font-style: italic; font-weight: 500; font-size: clamp(42px, 4.6vw, 64px); line-height: 1.05; margin: 0;
+  background: linear-gradient(180deg, #fbefcb 0%, #e3c27a 45%, #b58b3a 80%, #8a6a35 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(201,162,39,.25));
+}
+.vip__rule { width: 70px; height: 1px; background: linear-gradient(90deg, transparent, #c9a227, transparent); margin: 24px 0 18px; }
+.vip__sub { font: 400 12.5px "Inter", var(--sans); letter-spacing: .34em; text-transform: uppercase; color: #bdb6aa; margin: 0; padding-left: .34em; }
+@media (max-width: 900px) { .platinum__vip { aspect-ratio: auto; min-height: 300px; border-radius: 6px; } }
+.vip__title { padding: 0 .14em .06em; }
+
+/* ===== Một khung vàng bao quanh cả khối VIP + 4 gói Platinum ===== */
+.platinum {
+  position: relative; padding: 30px; border: 1px solid rgba(201,162,39,.7);
+  box-shadow: inset 0 0 0 8px #111, inset 0 0 0 9px rgba(201,162,39,.35), 0 0 40px rgba(201,162,39,.08);
+  background: linear-gradient(180deg, rgba(201,162,39,.04), transparent 40%);
+}
+.platinum__vip { border-color: rgba(201,162,39,.28); box-shadow: none; }
+.platinum .tier { border-color: rgba(201,162,39,.22); }
+@media (max-width: 600px) { .platinum { padding: 18px; } }
+@media (max-width: 600px) { .vip__title { font-size: 36px; } .platinum__vip { padding: 36px 14px; } }

@@ -27,7 +27,7 @@ const NAV = [
 
 $("#site-header").outerHTML = `
   <div class="announce">
-    First Visit Special: <strong>30% off</strong> your first facial
+    First Visit Special: <strong>40% off</strong> your first facial
     <a href="#" data-book>Book now →</a>
   </div>
   <header class="header" id="top">
@@ -208,8 +208,9 @@ function locPhotoCard(l) {
       <div class="lphoto__body">
         <h3 class="lphoto__city">${l.name}</h3>
         <p>${l.address}</p>
-        ${(l.phones || []).map(([lbl, num, link]) => `<p><a href="tel:${link}">${num}</a> <span>· ${lbl}</span></p>`).join("")}
-        <p class="lphoto__note">${l.walkin ? "Nail walk-ins welcome" : "By appointment only"}</p>
+        <div class="lphoto__svcs">${(l.phones || []).map(([lbl, num, link, note]) => `
+          <div class="lphoto__svc"><strong>${lbl}</strong><a href="tel:${link}">${num}</a>${note ? `<em>${note}</em>` : ""}</div>`).join("")}
+        </div>
         <a class="lphoto__visit" href="salon.html#${l.id}">Visit this spa</a>
       </div>
     </article>`;
@@ -380,7 +381,13 @@ lb.el.addEventListener("touchend", e => {
 /* ---------- Platinum Facial Collection ---------- */
 $$("[data-platinum]").forEach(el => {
   el.innerHTML = `
-    <div class="platinum__media"><img src="images/svc-platinum.webp" alt="Platinum facial at V Angel" loading="lazy" /></div>
+    <div class="platinum__media platinum__vip">
+      <span class="vip__crown" aria-hidden="true">♛</span>
+      <p class="vip__kicker">Exclusive</p>
+      <h3 class="vip__title">VIP Member<br />Package</h3>
+      <span class="vip__rule" aria-hidden="true"></span>
+      <p class="vip__sub">Platinum Facial Collection</p>
+    </div>
     <div class="platinum__tiers">${PLATINUM.map(p => `
       <div class="tier tier--${p.tier.toLowerCase().replace(/\s+/g, "-")}">
         <div class="tier__head"><span class="tier__crown" aria-hidden="true">♛</span><span class="tier__name">${p.tier}</span></div>

@@ -23,14 +23,14 @@ const SALON = {
 /* ---------- Chi nhánh ----------
    cats: nhóm dịch vụ có tại chi nhánh (dùng để lọc ô chọn dịch vụ khi đặt lịch) */
 const LOCATIONS = [
-  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=2", phones: [["Nails", "(479) 717-2557", "+14797172557"], ["Facial & lash", "(857) 218-8777", "+18572188777"]],
+  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=2", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "1602 E Robinson Ave #K, Springdale, AR 72764",
     services: ["Nail", "Facial", "Lash", "Lash Lift", "Skincare"],
     cats: ["nail", "facial", "lash", "brow"],
     policy: "Nails: walk-ins welcome or book ahead. Facial, lash, lash lift and skincare: by appointment only.",
     walkin: true,
     hours: [["Monday – Friday", "9:30 AM – 7:00 PM"], ["Saturday", "9:30 AM – 6:00 PM"], ["Sunday", "Closed (facials by appointment)"]] },
-  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=2", phones: [["Appointments", "(857) 218-8777", "+18572188777"]],
+  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=3", phones: [["Facial, Lash & Brows", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "Room 6, 1724 SE Moberly Ln, Bentonville, AR 72712",
     services: ["Facial", "Lash", "Brow Lamination", "Lash Lift"],
     cats: ["facial", "lash", "brow"],
@@ -45,7 +45,7 @@ const LOCATIONS = [
    steps: các mục "Bao gồm" in trên bảng giá */
 const TREATMENTS = [
   // FACIAL — Essential
-  { category: "facial", name: "Hydro Glow Facial", duration: "75 min", price: "$180", badge: "Premium", popular: true, image: "images/svc-hydro-glow.webp",
+  { category: "facial", name: "Hydro Glow Facial", duration: "75 min", price: "$180", badge: "Premium", popular: true, image: "images/svc-hydro-glow-ba.webp",
     desc: "Hydro dermabrasion deep-cleans, deeply hydrates and infuses serum — skin glows right after your visit.",
     benefits: ["Hydro Dermabrasion", "Deep Hydration", "Instant Glow"],
     steps: ["Hydro Dermabrasion", "Deep Hydration", "Serum Infusion", "Instant Glow"] },
@@ -185,7 +185,7 @@ const REVIEWS = [
 
 /* ---------- Điểm nổi bật (trang Salon) ---------- */
 const OFFERS = [
-  { big: "30% OFF", title: "First Visit Special", sub: "Your first facial at V Angel" },
+  { big: "40% OFF", title: "First Visit Special", sub: "Your first facial at V Angel" },
   { big: "$220+", title: "Platinum Collection", sub: "4 luxury facial packages, 75–120 min" },
   { big: "$15", title: "LED Light Therapy", sub: "Add-on for any facial treatment" },
   { big: "$18+", title: "Kid Menu", sub: "Manicures and pedicures for kids" }

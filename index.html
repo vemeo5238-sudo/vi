@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261116q" />
+  <link rel="stylesheet" href="style.css?v=20261117h" />
 </head>
 <body data-page="home">
   <div id="site-header"></div>
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="mslide mslide--photo" role="group" aria-roledescription="slide" aria-label="2 of 2">
-          <img class="mslide__bg" src="images/slide-room.webp" alt="" aria-hidden="true" />
+          <img class="mslide__bg mslide__bg--bs" src="images/slide-beauty-space.webp" alt="" aria-hidden="true" />
           <div class="mslide__content">
             <p class="mslide__eyebrow">V Angel</p>
             <h2 class="mslide__title">Your Beauty.<br />Our Passion.</h2>
@@ -74,9 +74,9 @@
     <!-- Tab ưu đãi bên trái + nút nhắn tin (chỉ trên điện thoại) -->
     <div class="sidetab" id="sideTab">
       <button class="sidetab__close" aria-label="Close offer" id="sideTabClose">×</button>
-      <a href="#" class="sidetab__btn" data-book="Basic Glow Facial" aria-label="Get 30% off your first facial">GET 30% OFF</a>
+      <a href="#" class="sidetab__btn" data-book="Basic Glow Facial" aria-label="Get 40% off your first facial">GET 40% OFF</a>
     </div>
-    <a class="chatbub" href="sms:+18572188777" aria-label="Text Vi at (857) 218-8777">
+    <a class="chatbub" href="https://m.me/112134470501004" target="_blank" rel="noopener" aria-label="Chat with V Angel on Facebook Messenger" title="Chat with us on Messenger">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17.5 4 20v-4.2A7 7 0 0 1 3 12c0-4.4 3.8-8 8.5-8S20 7.6 20 12s-3.8 8-8.5 8c-1.6 0-3.1-.4-4.5-1"/><path d="M13 9.5c2.9.3 5 2.4 5 4.9 0 1-.3 1.9-.9 2.7V20l-2.4-1.6"/></svg>
     </a>
 
@@ -96,7 +96,7 @@
     <!-- 3. Dịch vụ nổi bật -->
     <section class="section">
       <div class="container">
-        <div class="feature reveal" id="featured"></div>
+        <div class="features" id="featured"></div>
       </div>
     </section>
 
@@ -276,26 +276,42 @@
 
   <div id="site-footer"></div>
 
-  <script src="data.js?v=20261116f"></script>
-  <script src="common.js?v=20261116f"></script>
+  <script src="data.js?v=20261118a"></script>
+  <script src="common.js?v=20261117c"></script>
   <script>
-    /* Dịch vụ nổi bật */
-    const top1 = TREATMENTS[0];
-    $("#featured").innerHTML = `
-      <div class="feature__media card__media--${top1.category}">${top1.image ? `<img src="${top1.image}" alt="${top1.name}">` : ICONS[top1.category]}</div>
-      <div class="feature__body">
-        <span class="card__badge card__badge--static">Signature Facial</span>
-        <h2>${top1.name}</h2>
-        <p class="feature__price">${top1.price} <span>· ${top1.duration}</span></p>
-        <p>${top1.desc}</p>
-        <div class="tags">${top1.benefits.map(b => `<span>${b}</span>`).join("")}</div>
-        <div class="btn-row">
-          <a href="#" class="btn btn--gold" data-book="${top1.name}">Book</a>
-          <a href="treatments.html" class="link-gold">All services →</a>
+    /* Dịch vụ nổi bật (4 khối, ảnh xen kẽ trái/phải) — nội dung theo menu in tại salon */
+    const FEATURED = [
+      { name: "Basic Glow Facial", badge: "Signature Facial", price: "$80",
+        list: ["Deep Cleansing / Limpieza profunda", "Exfoliation / Exfoliación", "Hydrating Mask / Mascarilla hidratante"] },
+      { name: "Acne Rescue Facial", badge: "Essential Facial", price: "$120",
+        list: ["Deep Cleansing / Limpieza profunda", "LED Blue Light / Luz LED azul", "Calming Treatment / Tratamiento calmante", "Hydrating Mask / Mascarilla hidratante"] },
+      { name: "Age-Defying Facial", badge: "Premium Facial", price: "$160",
+        list: ["Lifting Massage / Masaje reafirmante", "Collagen Treatment / Tratamiento de colágeno", "LED Light Therapy / Terapia LED", "Anti-Aging Serum / Suero antiedad"] },
+      { name: "Skin Renewal Peel", badge: "Premium Facial", price: "$220",
+        list: ["Advanced Peel / Peel avanzado", "Deep Rejuvenation / Rejuvenecimiento profundo", "Collagen Boost / Impulso de colágeno", "Recovery Mask / Mascarilla reparadora"] }
+    ];
+    $("#featured").innerHTML = FEATURED.map((f, i) => {
+      const t = TREATMENTS.find(x => x.name === f.name) || {};
+      return `
+      <div class="feature reveal${i % 2 ? " feature--flip" : ""}">
+        <div class="feature__media card__media--facial">${t.image ? `<img src="${t.image}" alt="${f.name}" loading="lazy">` : ICONS.facial}</div>
+        <div class="feature__body">
+          <span class="card__badge card__badge--static">${f.badge}</span>
+          <h2>${f.name}</h2>
+          <p class="feature__price">${f.price}</p>
+          <ul class="feature__list">${f.list.map(x => `<li>${x}</li>`).join("")}</ul>
+          <div class="btn-row">
+            <a href="#" class="btn btn--gold" data-book="${f.name}">Book</a>
+            <a href="treatments.html?loai=facial" class="link-gold">All facials →</a>
+          </div>
         </div>
       </div>`;
+    }).join("");
+    $$("#featured .reveal").forEach(el => (typeof io !== "undefined" && io) ? io.observe(el) : el.classList.add("is-in"));
 
-    $("#popularGrid").innerHTML = TREATMENTS.filter(t => t.popular).slice(0, 4).map(treatmentCard).join("");
+    /* Dịch vụ nổi bật: sắp xếp giá từ thấp đến cao */
+    const priceNum = t => parseFloat(String(t.price).replace(/[^0-9.]/g, "")) || 0;
+    $("#popularGrid").innerHTML = TREATMENTS.filter(t => t.popular).slice(0, 4).sort((a, b) => priceNum(a) - priceNum(b)).map(treatmentCard).join("");
     $("#reviewList").innerHTML = REVIEWS.map(reviewCard).join("");
     $("#visitLocs").innerHTML = LOCATIONS.map(l => `
       <li><a href="salon.html#${l.id}"><strong>${l.name}</strong><span>${l.address}</span><em>${l.services.join(" • ")}${l.walkin ? " · Nail walk-ins welcome" : " · By appointment only"}</em></a></li>`).join("");
@@ -359,8 +375,9 @@
     $$("[data-mloc]").forEach(b => b.addEventListener("click", () => showLoc(b.dataset.mloc)));
     showLoc("springdale");
     const st = $("#sideTab");
-    if (sessionStorage.getItem("vangel_tab_closed")) st.hidden = true;
-    $("#sideTabClose").addEventListener("click", () => { st.hidden = true; sessionStorage.setItem("vangel_tab_closed", "1"); });
+    /* Bấm ✕ chỉ ẩn tab trong lần xem này; tải lại trang thì tab hiện lại */
+    try { sessionStorage.removeItem("vangel_tab_closed"); } catch (e) {}
+    $("#sideTabClose").addEventListener("click", () => { st.hidden = true; });
     /* Nút đặt lịch trong trình chiếu: chọn sẵn chi nhánh đang chọn */
     $$(".mslider [data-book]").forEach(a => a.addEventListener("click", e => {
       e.preventDefault(); e.stopPropagation(); openBook(a.dataset.book, a.dataset.book && branchFor(a.dataset.book) ? null : mLoc);
