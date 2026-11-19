@@ -34,7 +34,7 @@ const LOCATIONS = [
     policy: "Nails: walk-ins welcome or book ahead. Facial, lash, lash lift and skincare: by appointment only.",
     walkin: true,
     hours: [["Monday – Friday", "9:30 AM – 7:00 PM"], ["Saturday", "9:30 AM – 6:00 PM"], ["Sunday", "Closed (facials by appointment)"]] },
-  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=3", phones: [["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
+  { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=5", phones: [["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "Room 6, 1724 SE Moberly Ln, Bentonville, AR 72712",
     services: ["Facial", "Lash", "Brow Lamination", "Lash Lift"],
     cats: ["facial", "lash", "brow"],
@@ -293,6 +293,7 @@ const RIMAN = [
    [tên file, tiêu đề, hướng "v" dọc / "h" ngang, thời lượng]
    Mỗi video có 3 file: tên.mp4 (đầy đủ, có tiếng), tên-preview.mp4 (6 giây), tên.jpg (ảnh bìa) */
 const VIDEOS = [
+  ["v-lash-story", "Lash extensions — a client's story", "v", "1:00"],
   ["v-luxury-facial", "Angel Nails Luxury Facial", "v", "6:56"],
   ["v-microneedling", "Skin rejuvenation with microneedling", "v", "0:31"],
   ["v-beyond-skincare", "Beyond Skincare — a relaxing mask", "v", "0:22"],

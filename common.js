@@ -521,7 +521,7 @@ if ($("[data-videos]")) {
 /* ---------- Nút dịch ngôn ngữ (góc phải dưới, dùng Google Translate) ---------- */
 (function () {
   const LANGS = [
-    ["en", "English", "EN"], ["vi", "Tiếng Việt", "VI"], ["es", "Español", "ES"], ["mh", "Kajin M̧ajeļ", "MH"],
+    ["en", "English", "EN"], ["es", "Español (México)", "ES-MX"], ["vi", "Tiếng Việt", "VI"], ["mh", "Kajin M̧ajeļ", "MH"],
     ["zh-CN", "中文 (简体)", "中文"], ["ko", "한국어", "KO"], ["tl", "Tagalog", "TL"], ["lo", "ພາສາລາວ", "LO"],
     ["fr", "Français", "FR"], ["pt", "Português", "PT"], ["de", "Deutsch", "DE"], ["hi", "हिन्दी", "HI"],
     ["ja", "日本語", "JA"], ["ar", "العربية", "AR"]
