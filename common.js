@@ -310,6 +310,7 @@ function openBook(service, branch) {
   branchSelect.value = branch || branchFor(service) || LOCATIONS[0].id;
   fillServices(branchSelect.value, service);
   modal.classList.add("is-open"); modal.setAttribute("aria-hidden", "false"); lockScroll(true);
+  if (typeof refreshTaken === "function") refreshTaken();
   setTimeout(() => $("input", bookForm).focus(), 50);
 }
 function closeBook() { modal.classList.remove("is-open"); modal.setAttribute("aria-hidden", "true"); lockScroll(false); }
@@ -328,6 +329,10 @@ bookForm.addEventListener("submit", async e => {
       location: loc ? loc.name : (d.branch || ""), date: d.date || "", time: d.time || "", message: d.note || "", page: location.href });
     const r = await fetch(CONSULT_ENDPOINT, { method: "POST", body });
     const j = await r.json().catch(() => ({}));
+    if (r.status === 409 || j.code === "slot_taken") {
+      err.textContent = "Sorry, that time was just booked for this service. Please choose another time.";
+      err.hidden = false; refreshTaken(); return;
+    }
     if (!r.ok || !j.ok) throw new Error(r.status);
     bookForm.hidden = true; bookDone.hidden = false;
   } catch (x) {
@@ -335,6 +340,34 @@ bookForm.addEventListener("submit", async e => {
     err.hidden = false;
   } finally { btn.disabled = false; btn.textContent = label; }
 });
+
+/* Giờ đã có khách đặt (cùng chi nhánh + ngày + dịch vụ) -> khoá, ghi "Booked" */
+const TAKEN_URL = CONSULT_ENDPOINT ? CONSULT_ENDPOINT.replace("/submit", "/taken") : "";
+let takenReq = 0;
+async function refreshTaken() {
+  const timeSel = bookForm.elements.time, svc = bookForm.elements.service.value, date = bookForm.elements.date.value;
+  const loc = LOCATIONS.find(l => l.id === bookForm.elements.branch.value);
+  [...timeSel.options].forEach(o => { o.disabled = false; if (o.dataset.label) o.textContent = o.dataset.label; });
+  if (!TAKEN_URL || !svc || !date) return;
+  const my = ++takenReq;
+  try {
+    const q = new URLSearchParams({ date, service: svc, location: loc ? loc.name : "" });
+    const j = await fetch(TAKEN_URL + "&" + q.toString(), { cache: "no-store" }).then(r => r.json());
+    if (my !== takenReq) return;
+    const taken = new Set(j.taken || []);
+    [...timeSel.options].forEach(o => {
+      if (!o.dataset.label) o.dataset.label = o.textContent;
+      if (taken.has(o.value)) { o.disabled = true; o.textContent = o.dataset.label + " — Booked"; }
+    });
+    if (timeSel.selectedOptions[0] && timeSel.selectedOptions[0].disabled) {
+      const free = [...timeSel.options].find(o => !o.disabled);
+      if (free) timeSel.value = free.value;
+    }
+  } catch (e) { /* mất mạng: vẫn cho đặt, máy chủ sẽ chặn trùng */ }
+}
+["change", "input"].forEach(ev => bookForm.addEventListener(ev, e => {
+  if (["date", "branch", "service"].includes(e.target.name)) refreshTaken();
+}));
 
 /* ---------- Xử lý click chung ---------- */
 document.addEventListener("click", e => {

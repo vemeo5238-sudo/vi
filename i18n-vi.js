@@ -437,6 +437,7 @@ const VI_DICT = {
   "Notes": "Ghi chú",
   "We couldn't send your request online. Please call or text Vi at (857) 218-8777.": "Chưa gửi được yêu cầu qua mạng. Vui lòng gọi hoặc nhắn tin cho Vi: (857) 218-8777.",
   "Request appointment": "Gửi yêu cầu đặt lịch",
+  "Sorry, that time was just booked for this service. Please choose another time.": "Rất tiếc, giờ này vừa có người đặt dịch vụ này. Vui lòng chọn giờ khác.",
   "We've received your request and will call to confirm as soon as possible. Need it sooner? Nails:": "Chúng tôi đã nhận yêu cầu và sẽ gọi xác nhận sớm nhất. Cần gấp? Làm móng:",
   "· Vi:": "· Vi:",
   "Skin concerns, lash or nail style you'd like…": "Vấn đề về da, kiểu mi hoặc kiểu móng bạn muốn…",

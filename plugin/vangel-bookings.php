@@ -2,7 +2,7 @@
 /**
  * Plugin Name: V Angel Bookings
  * Description: Lưu khách đặt lịch / yêu cầu tư vấn từ website V Angel và gửi email báo cho tiệm. Xem tại menu "Khách đặt lịch".
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: V Angel
  * Text Domain: vangel-bookings
  */
@@ -24,15 +24,17 @@ add_action( 'init', function () {
 			'edit_item'     => 'Chi tiết khách',
 			'search_items'  => 'Tìm khách',
 			'not_found'     => 'Chưa có khách nào',
+			'not_found_in_trash' => 'Thùng rác trống',
+			'add_new'       => 'Thêm khách',
+			'add_new_item'  => 'Thêm khách mới',
 		),
 		'public'          => false,
 		'show_ui'         => true,
 		'show_in_menu'    => true,
 		'menu_position'   => 3,
 		'menu_icon'       => 'dashicons-calendar-alt',
-		'supports'        => array( 'title' ),
+		'supports'        => false,
 		'capability_type' => 'post',
-		'capabilities'    => array( 'create_posts' => 'do_not_allow' ),
 		'map_meta_cap'    => true,
 	) );
 } );
@@ -53,6 +55,36 @@ function vangel_bk_fields() {
 	);
 }
 
+function vangel_bk_times() {
+	return array( '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00' );
+}
+
+/* Đã có lịch (chưa xoá) cùng chi nhánh + ngày + giờ + dịch vụ chưa? Trả về ID lịch đó hoặc 0. */
+function vangel_bk_slot_taken( $date, $time, $service, $location, $exclude = 0 ) {
+	if ( '' === $date || '' === $time || '' === $service ) {
+		return 0;
+	}
+	$q = array(
+		'post_type'      => 'va_booking',
+		'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+		'post__not_in'   => $exclude ? array( (int) $exclude ) : array(),
+		'meta_query'     => array(
+			'relation' => 'AND',
+			array( 'key' => '_va_kind', 'value' => 'booking' ),
+			array( 'key' => '_va_date', 'value' => $date ),
+			array( 'key' => '_va_time', 'value' => $time ),
+			array( 'key' => '_va_service', 'value' => $service ),
+		),
+	);
+	if ( '' !== $location ) {
+		$q['meta_query'][] = array( 'key' => '_va_location', 'value' => $location );
+	}
+	$ids = get_posts( $q );
+	return $ids ? (int) $ids[0] : 0;
+}
+
 function vangel_bk_kind_label( $k ) {
 	return 'consult' === $k ? 'Tư vấn' : 'Đặt lịch';
 }
@@ -69,7 +101,47 @@ add_action( 'rest_api_init', function () {
 		'permission_callback' => '__return_true',
 		'callback'            => 'vangel_bk_submit',
 	) );
+	register_rest_route( 'vangel/v1', '/taken', array(
+		'methods'             => 'GET',
+		'permission_callback' => '__return_true',
+		'callback'            => 'vangel_bk_taken',
+	) );
 } );
+
+/* ?rest_route=/vangel/v1/taken&date=YYYY-MM-DD&location=Springdale&service=... -> các giờ đã kín */
+function vangel_bk_taken( WP_REST_Request $req ) {
+	$date     = sanitize_text_field( (string) $req->get_param( 'date' ) );
+	$location = sanitize_text_field( (string) $req->get_param( 'location' ) );
+	$service  = sanitize_text_field( (string) $req->get_param( 'service' ) );
+	if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) || '' === $service ) {
+		return array( 'taken' => array() );
+	}
+	$q = array(
+		'post_type'      => 'va_booking',
+		'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+		'posts_per_page' => 200,
+		'fields'         => 'ids',
+		'meta_query'     => array(
+			'relation' => 'AND',
+			array( 'key' => '_va_kind', 'value' => 'booking' ),
+			array( 'key' => '_va_date', 'value' => $date ),
+			array( 'key' => '_va_service', 'value' => $service ),
+		),
+	);
+	if ( '' !== $location ) {
+		$q['meta_query'][] = array( 'key' => '_va_location', 'value' => $location );
+	}
+	$times = array();
+	foreach ( get_posts( $q ) as $id ) {
+		$t = (string) get_post_meta( $id, '_va_time', true );
+		if ( '' !== $t ) {
+			$times[] = $t;
+		}
+	}
+	$res = rest_ensure_response( array( 'taken' => array_values( array_unique( $times ) ) ) );
+	$res->header( 'Cache-Control', 'no-store' );
+	return $res;
+}
 
 function vangel_bk_submit( WP_REST_Request $req ) {
 	// Bẫy spam: ô ẩn phải để trống.
@@ -97,6 +169,10 @@ function vangel_bk_submit( WP_REST_Request $req ) {
 	$digits = preg_replace( '/\D/', '', $d['phone'] );
 	if ( strlen( $digits ) < 9 || '' === $d['service'] ) {
 		return new WP_Error( 'invalid', 'Please enter your phone number and service.', array( 'status' => 400 ) );
+	}
+
+	if ( 'booking' === $kind && vangel_bk_slot_taken( $d['date'], $d['time'], $d['service'], $d['location'] ) ) {
+		return new WP_Error( 'slot_taken', 'This time is already booked for this service. Please choose another time.', array( 'status' => 409 ) );
 	}
 
 	$who   = '' !== $d['name'] ? $d['name'] : $d['phone'];
@@ -187,42 +263,126 @@ add_action( 'manage_va_booking_posts_custom_column', function ( $col, $id ) {
 	}
 }, 10, 2 );
 
-/* Ô chi tiết + đổi trạng thái khi mở một khách */
+/* Ô chi tiết khách: xem + sửa mọi thông tin, đổi trạng thái */
 add_action( 'add_meta_boxes_va_booking', function () {
 	add_meta_box( 'va_detail', 'Thông tin khách', function ( $post ) {
 		wp_nonce_field( 'va_status_save', 'va_status_nonce' );
-		echo '<table class="widefat striped" style="max-width:720px">';
-		foreach ( vangel_bk_fields() as $k => $label ) {
-			$v = (string) get_post_meta( $post->ID, '_va_' . $k, true );
-			if ( 'kind' === $k ) {
-				$v = vangel_bk_kind_label( $v );
-			}
-			echo '<tr><th style="width:180px">' . esc_html( $label ) . '</th><td>' . nl2br( esc_html( '' !== $v ? $v : '—' ) ) . '</td></tr>';
+		$m = function ( $k ) use ( $post ) {
+			return (string) get_post_meta( $post->ID, '_va_' . $k, true );
+		};
+		$kind = $m( 'kind' ) ?: 'booking';
+		$loc  = $m( 'location' );
+		$tm   = $m( 'time' );
+		echo '<table class="form-table" style="max-width:760px"><tbody>';
+		echo '<tr><th>Loại</th><td><select name="va[kind]"><option value="booking"' . selected( $kind, 'booking', false ) . '>Đặt lịch</option><option value="consult"' . selected( $kind, 'consult', false ) . '>Tư vấn</option></select></td></tr>';
+		foreach ( array( 'name' => 'Họ tên', 'phone' => 'Số điện thoại', 'email' => 'Email', 'service' => 'Dịch vụ' ) as $k => $label ) {
+			echo '<tr><th><label for="va_' . esc_attr( $k ) . '">' . esc_html( $label ) . '</label></th><td><input class="regular-text" id="va_' . esc_attr( $k ) . '" name="va[' . esc_attr( $k ) . ']" value="' . esc_attr( $m( $k ) ) . '"></td></tr>';
 		}
-		$mailed = get_post_meta( $post->ID, '_va_mailed', true );
-		echo '<tr><th>Email báo</th><td>' . ( 'yes' === $mailed ? 'Đã gửi' : 'Chưa gửi được' ) . '</td></tr>';
-		echo '</table>';
-		$s = get_post_meta( $post->ID, '_va_status', true ) ?: 'new';
-		echo '<p><label><strong>Trạng thái:</strong> <select name="va_status">';
+		echo '<tr><th>Chi nhánh</th><td><select name="va[location]">';
+		foreach ( array( '', 'Springdale', 'Bentonville' ) as $o ) {
+			echo '<option value="' . esc_attr( $o ) . '"' . selected( $loc, $o, false ) . '>' . esc_html( '' === $o ? '—' : $o ) . '</option>';
+		}
+		if ( '' !== $loc && ! in_array( $loc, array( 'Springdale', 'Bentonville' ), true ) ) {
+			echo '<option value="' . esc_attr( $loc ) . '" selected>' . esc_html( $loc ) . '</option>';
+		}
+		echo '</select></td></tr>';
+		echo '<tr><th>Ngày hẹn</th><td><input type="date" name="va[date]" value="' . esc_attr( $m( 'date' ) ) . '"></td></tr>';
+		echo '<tr><th>Giờ hẹn</th><td><select name="va[time]"><option value="">—</option>';
+		$times = vangel_bk_times();
+		if ( '' !== $tm && ! in_array( $tm, $times, true ) ) {
+			$times[] = $tm;
+		}
+		foreach ( $times as $t ) {
+			list( $h, $mi ) = array_map( 'intval', explode( ':', $t ) );
+			$lab = ( $h % 12 ? $h % 12 : 12 ) . ':' . str_pad( (string) $mi, 2, '0', STR_PAD_LEFT ) . ( $h < 12 ? ' AM' : ' PM' );
+			echo '<option value="' . esc_attr( $t ) . '"' . selected( $tm, $t, false ) . '>' . esc_html( $lab ) . '</option>';
+		}
+		echo '</select></td></tr>';
+		echo '<tr><th>Ghi chú / câu hỏi</th><td><textarea class="large-text" rows="3" name="va[message]">' . esc_textarea( $m( 'message' ) ) . '</textarea></td></tr>';
+		$s = $m( 'status' ) ?: 'new';
+		echo '<tr><th>Trạng thái</th><td><select name="va_status">';
 		foreach ( array( 'new' => 'Mới', 'contacted' => 'Đã liên hệ', 'done' => 'Xong' ) as $val => $lab ) {
 			echo '<option value="' . esc_attr( $val ) . '"' . selected( $s, $val, false ) . '>' . esc_html( $lab ) . '</option>';
 		}
-		echo '</select></label> — bấm <em>Update</em> để lưu.</p>';
+		echo '</select></td></tr>';
+		if ( $m( 'page' ) ) {
+			echo '<tr><th>Gửi từ trang</th><td>' . esc_html( $m( 'page' ) ) . '</td></tr>';
+			$mailed = $m( 'mailed' );
+			echo '<tr><th>Email báo</th><td>' . ( 'yes' === $mailed ? 'Đã gửi' : 'Chưa gửi được' ) . '</td></tr>';
+		} else {
+			echo '<tr><th></th><td><em>Khách do tiệm tự thêm.</em></td></tr>';
+		}
+		echo '</tbody></table><p>Sửa xong bấm <strong>Update</strong> (hoặc <strong>Publish</strong> khi thêm khách mới) để lưu. Lịch đặt (loại "Đặt lịch") sẽ khoá giờ đó cho cùng dịch vụ trên website.</p>';
 	}, 'va_booking', 'normal', 'high' );
 } );
+
+/* Tiêu đề tự đặt theo tên khách + dịch vụ */
+add_filter( 'wp_insert_post_data', function ( $data, $postarr ) {
+	if ( 'va_booking' !== $data['post_type'] || empty( $_POST['va'] ) || ! isset( $_POST['va_status_nonce'] ) ) {
+		return $data;
+	}
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['va_status_nonce'] ) ), 'va_status_save' ) ) {
+		return $data;
+	}
+	$va    = wp_unslash( $_POST['va'] );
+	$kind  = isset( $va['kind'] ) && 'consult' === $va['kind'] ? 'consult' : 'booking';
+	$who   = sanitize_text_field( (string) ( $va['name'] ?? '' ) );
+	$who   = '' !== $who ? $who : sanitize_text_field( (string) ( $va['phone'] ?? '' ) );
+	$svc   = sanitize_text_field( (string) ( $va['service'] ?? '' ) );
+	$data['post_title'] = vangel_bk_kind_label( $kind ) . ' — ' . ( '' !== $who ? $who : 'Khách' ) . ( '' !== $svc ? ' — ' . $svc : '' );
+	return $data;
+}, 10, 2 );
 
 add_action( 'save_post_va_booking', function ( $id ) {
 	if ( ! isset( $_POST['va_status_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['va_status_nonce'] ) ), 'va_status_save' ) ) {
 		return;
 	}
-	if ( ! current_user_can( 'edit_post', $id ) ) {
+	if ( ! current_user_can( 'edit_post', $id ) || wp_is_post_revision( $id ) ) {
 		return;
 	}
 	$s = isset( $_POST['va_status'] ) ? sanitize_key( wp_unslash( $_POST['va_status'] ) ) : 'new';
 	if ( in_array( $s, array( 'new', 'contacted', 'done' ), true ) ) {
 		update_post_meta( $id, '_va_status', $s );
 	}
+	if ( empty( $_POST['va'] ) || ! is_array( $_POST['va'] ) ) {
+		return;
+	}
+	$va = wp_unslash( $_POST['va'] );
+	update_post_meta( $id, '_va_kind', isset( $va['kind'] ) && 'consult' === $va['kind'] ? 'consult' : 'booking' );
+	foreach ( array( 'name', 'phone', 'service', 'location', 'date', 'time' ) as $k ) {
+		update_post_meta( $id, '_va_' . $k, mb_substr( sanitize_text_field( (string) ( $va[ $k ] ?? '' ) ), 0, 200 ) );
+	}
+	$e = sanitize_email( (string) ( $va['email'] ?? '' ) );
+	update_post_meta( $id, '_va_email', is_email( $e ) ? $e : '' );
+	update_post_meta( $id, '_va_message', mb_substr( sanitize_textarea_field( (string) ( $va['message'] ?? '' ) ), 0, 2000 ) );
+	$dup = vangel_bk_slot_taken( (string) get_post_meta( $id, '_va_date', true ), (string) get_post_meta( $id, '_va_time', true ), (string) get_post_meta( $id, '_va_service', true ), (string) get_post_meta( $id, '_va_location', true ), $id );
+	if ( $dup && 'booking' === get_post_meta( $id, '_va_kind', true ) ) {
+		set_transient( 'vangel_bk_dup_' . get_current_user_id(), $dup, 60 );
+	}
 } );
+
+add_action( 'admin_notices', function () {
+	$dup = get_transient( 'vangel_bk_dup_' . get_current_user_id() );
+	if ( $dup ) {
+		delete_transient( 'vangel_bk_dup_' . get_current_user_id() );
+		echo '<div class="notice notice-warning"><p>Lưu ý: giờ này đã có khách khác đặt cùng dịch vụ — <a href="' . esc_url( get_edit_post_link( $dup ) ) . '">xem lịch đó</a>.</p></div>';
+	}
+} );
+
+/* Nút trong danh sách: tiếng Việt, bỏ Quick Edit */
+add_filter( 'post_row_actions', function ( $actions, $post ) {
+	if ( 'va_booking' !== $post->post_type ) {
+		return $actions;
+	}
+	unset( $actions['inline hide-if-no-js'] );
+	$map = array( 'edit' => 'Sửa', 'trash' => 'Xoá', 'untrash' => 'Khôi phục', 'delete' => 'Xoá vĩnh viễn' );
+	foreach ( $map as $k => $lab ) {
+		if ( isset( $actions[ $k ] ) ) {
+			$actions[ $k ] = preg_replace( '/>[^<]*<\/a>$/', '>' . $lab . '</a>', $actions[ $k ] );
+		}
+	}
+	return $actions;
+}, 10, 2 );
 
 /* ---------- Trang cài đặt email + tải danh sách CSV ---------- */
 add_action( 'admin_menu', function () {
