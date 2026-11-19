@@ -1,3 +1,5 @@
+/* Video: tren GitHub Pages / may tinh dung thu muc videos/ co san; tren ten mien rieng (vangelbeauty.com) phat video tu ban GitHub */
+const VBASE = /github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? "videos/" : "https://vemeo5238-sudo.github.io/vi/videos/";
 /* =========================================================
    PHẦN DÙNG CHUNG CHO MỌI TRANG
    Header, footer, popup đặt lịch, thẻ dịch vụ, thư viện ảnh
@@ -483,7 +485,7 @@ $$("[data-videos]").forEach(el => {
   const list = VIDEOS.filter(v => kind === "all" || v[2] === kind);
   el.innerHTML = list.map(([f, title, o, dur]) => `
     <button class="vcard vcard--${o}" data-video="${f}" aria-label="Watch video: ${title}">
-      <video src="videos/${f}-preview.mp4" poster="videos/${f}.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+      <video src="${VBASE}${f}-preview.mp4" poster="${VBASE}${f}.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
       <span class="vcard__play">${PLAY_SVG}</span>
       <span class="vcard__info"><strong>${title}</strong><span>${dur}</span></span>
     </button>`).join("");
@@ -508,7 +510,7 @@ if ($("[data-videos]")) {
     if (c) {
       const v = VIDEOS.find(x => x[0] === c.dataset.video);
       vm.classList.toggle("vmodal--v", v[2] === "v");
-      vmv.poster = `videos/${v[0]}.jpg`; vmv.src = `videos/${v[0]}.mp4`; $("#vmTitle").textContent = v[1];
+      vmv.poster = `${VBASE}${v[0]}.jpg`; vmv.src = `${VBASE}${v[0]}.mp4`; $("#vmTitle").textContent = v[1];
       vm.classList.add("is-open"); lockScroll(true); vmv.play().catch(() => {});
       return;
     }
