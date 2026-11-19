@@ -117,10 +117,37 @@ const TREATMENTS = [
 
 /* ---------- Platinum Facial Collection ---------- */
 const PLATINUM = [
-  { tier: "Silver", name: "Platinum Silver", duration: "75 min", price: "$220", desc: "Perfect for deep cleansing, hydration and a healthy glow." },
-  { tier: "Gold", name: "Platinum Gold", duration: "90 min", price: "$250", desc: "Advanced treatment for brighter, firmer, younger-looking skin." },
-  { tier: "Diamond", name: "Platinum Diamond", duration: "105 min", price: "$280", desc: "Enhanced results with premium collagen and deep rejuvenation." },
-  { tier: "Elite Peel", name: "Platinum Elite Peel Facial", duration: "120 min", price: "$300", desc: "The ultimate luxury experience for total skin transformation. Includes Advanced Peel, Deep Rejuvenation, Collagen Boost and Recovery Mask." }
+  { tier: "Essential", name: "Essential Deep Clean Facial", duration: "", price: "$79",
+    desc: "Monthly deep cleansing and hydration for clean, healthy-looking skin.",
+    includes: ["Deep cleansing", "Gentle exfoliation", "Hydration", "Personalized skincare recommendations"],
+    best: "Monthly skincare maintenance and healthy-looking skin.",
+    p3: "$225", p6: "$425", vip: { name: "Essential VIP", price: "$790", save: "$158", pay: ["$395", "$263.33*", "$158"] } },
+  { tier: "Renewal", name: "Deep Clean + Peel Facial", duration: "", price: "$120",
+    desc: "Deep cleansing with customized exfoliation and a gentle peel when appropriate.",
+    includes: ["Deep cleansing", "Customized exfoliation", "Gentle peeling when appropriate", "Hydration and skin barrier support"],
+    best: "Dull skin, uneven texture, congestion and clients seeking consistent skincare.",
+    note: "Peel frequency depends on skin condition and professional assessment.",
+    p3: "$340", p6: "$650", vip: { name: "Skin Renewal VIP", price: "$1,200", save: "$240", pay: ["$600", "$400", "$240"] } },
+  { tier: "Silver", name: "Platinum Silver", duration: "75 min", price: "$220",
+    desc: "Perfect for deep cleansing, hydration and a healthy glow.",
+    includes: ["Deep cleansing", "Intensive hydration", "Customized advanced facial techniques", "Professional skin assessment"],
+    best: "Clients who want a premium facial focused on clarity and glow.",
+    p3: "$625", p6: "$1,190", vip: { name: "Platinum Silver VIP", price: "$2,200", save: "$440", pay: ["$1,100", "$733.33*", "$440"] } },
+  { tier: "Gold", name: "Platinum Gold", duration: "90 min", price: "$250",
+    desc: "Advanced treatment for brighter, firmer, younger-looking skin.",
+    includes: ["Advanced brightening treatment", "Firming and lifting techniques", "Hydration", "Professional skin assessment"],
+    best: "Clients who want brighter, firmer, younger-looking skin.",
+    p3: "$710", p6: "$1,350", vip: { name: "Platinum Gold VIP", price: "$2,500", save: "$500", pay: ["$1,250", "$833.33*", "$500"] } },
+  { tier: "Diamond", name: "Platinum Diamond", duration: "105 min", price: "$280",
+    desc: "Enhanced results with premium collagen and deep rejuvenation.",
+    includes: ["Premium collagen treatment", "Deep rejuvenation", "Advanced facial techniques", "Professional skin assessment"],
+    best: "Clients looking for enhanced anti-aging and rejuvenation results.",
+    p3: "$795", p6: "$1,510", vip: { name: "Platinum Diamond VIP", price: "$2,800", save: "$560", pay: ["$1,400", "$933.33*", "$560"] } },
+  { tier: "Elite Peel", name: "Platinum Elite Peel Facial", duration: "120 min", price: "$300",
+    desc: "The ultimate luxury experience for total skin transformation.",
+    includes: ["Advanced Peel", "Deep Rejuvenation", "Collagen Boost", "Recovery Mask"],
+    best: "Clients who want the most complete, transformative facial we offer.",
+    p3: "$850", p6: "$1,620", vip: { name: "Platinum Elite VIP", price: "$3,000", save: "$600", pay: ["$1,500", "$1,000", "$600"] } }
 ];
 
 /* ---------- Bảng giá đầy đủ (chép từ menu in tại salon) ----------

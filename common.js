@@ -22,7 +22,8 @@ function socialHTML(extra = "") {
 const NAV = [
   ["treatments", "treatments.html", "Services"],
   ["prices", "treatments.html#bang-gia", "Price List"],
-  ["salon", "salon.html", "Locations"]
+  ["salon", "salon.html", "Locations"],
+  ["vip", "vip.html", "VIP Membership"]
 ];
 
 $("#site-header").outerHTML = `
@@ -122,7 +123,7 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
     </div>
     <div class="fx__bottom">
       <nav class="fx__legal" aria-label="Footer">
-        <a href="treatments.html#bang-gia">Price list</a><a href="salon.html">Locations</a><a href="salon.html#faq">FAQ</a><a href="#" data-book>Book now</a><a href="#top">Back to top</a>
+        <a href="treatments.html#bang-gia">Price list</a><a href="vip.html">VIP Membership</a><a href="salon.html">Locations</a><a href="salon.html#faq">FAQ</a><a href="#" data-book>Book now</a><a href="#top">Back to top</a>
       </nav>
       <p class="fx__copy">© ${new Date().getFullYear()} V Angel Facial &amp; Nail Spa</p>
     </div>
@@ -387,17 +388,75 @@ $$("[data-platinum]").forEach(el => {
       <h3 class="vip__title">VIP Member<br />Package</h3>
       <span class="vip__rule" aria-hidden="true"></span>
       <p class="vip__sub">Platinum Facial Collection</p>
+      <a href="vip.html" class="vip__more">View VIP Memberships →</a>
     </div>
-    <div class="platinum__tiers">${PLATINUM.map(p => `
+    <div class="platinum__tiers">${PLATINUM.map((p, i) => `
       <div class="tier tier--${p.tier.toLowerCase().replace(/\s+/g, "-")}">
         <div class="tier__head"><span class="tier__crown" aria-hidden="true">♛</span><span class="tier__name">${p.tier}</span></div>
         <h3>${p.name}</h3>
-        <p class="tier__meta">${p.duration} · <strong>${p.price}</strong></p>
+        <p class="tier__meta">${p.duration ? p.duration + " · " : "From "}<strong>${p.price}</strong></p>
         <p class="tier__desc">${p.desc}</p>
-        <a href="#" class="link-gold" data-book="${p.name}">Book →</a>
+        <a href="#" class="link-gold" data-vipd="${i}">Book →</a>
       </div>`).join("")}
     </div>`;
 });
+
+/* Bảng chi tiết khi bấm "Book" trong khung VIP */
+if ($("[data-platinum]")) {
+  const vd = document.createElement("div");
+  vd.className = "modal vipd"; vd.id = "vipdModal"; vd.setAttribute("aria-hidden", "true");
+  vd.innerHTML = '<div class="modal__backdrop" data-vipd-close></div><div class="modal__box vipd__box" role="dialog" aria-modal="true" aria-labelledby="vipdTitle"><button class="modal__close" aria-label="Close" data-vipd-close>×</button><div id="vipdBody"></div></div>';
+  document.body.appendChild(vd);
+  const closeVd = () => { vd.classList.remove("is-open"); vd.setAttribute("aria-hidden", "true"); lockScroll(false); };
+  const openVd = i => {
+    const p = PLATINUM[i], v = p.vip, cls = p.tier.toLowerCase().replace(/\s+/g, "-");
+    $("#vipdBody").innerHTML = `
+      <div class="vipd__head tier--${cls}">
+        <span class="tier__crown" aria-hidden="true">♛</span><span class="vipd__tier">${p.tier}</span>
+        <h3 id="vipdTitle">${p.name}</h3>
+        <p class="vipd__meta">${p.duration ? p.duration + " · " : ""}<strong>${p.price}</strong> single session</p>
+        <p class="vipd__desc">${p.desc}</p>
+      </div>
+      <div class="vipd__grid">
+        <div>
+          <h4>What's included</h4>
+          <ul class="vipm-list">${p.includes.map(x => `<li>${x}</li>`).join("")}</ul>
+          <p class="vipd__best"><strong>Best for:</strong> ${p.best}</p>
+          ${p.note ? `<p class="vipd__note">${p.note}</p>` : ""}
+        </div>
+        <div>
+          <h4>Pricing &amp; packages</h4>
+          <table class="vipd__table">
+            <tr><td>Single session</td><td>${p.price}</td></tr>
+            <tr><td>3-session package</td><td>${p.p3}</td></tr>
+            <tr><td>6-session package</td><td>${p.p6}</td></tr>
+          </table>
+          <div class="vipd__vip">
+            <p class="vipd__vipname">♛ ${v.name} · 12 sessions</p>
+            <p class="vipd__vipprice">${v.price}<span> / year</span></p>
+            <p class="vipd__vipsave">Pay for 10, get 2 FREE · Save ${v.save}</p>
+            <p class="vipd__pay">Or split: 2 × ${v.pay[0]} · 3 × ${v.pay[1]} · 5 × ${v.pay[2]}</p>
+          </div>
+        </div>
+      </div>
+      <div class="vipd__actions">
+        <a href="#" class="btn btn--gold" data-book="${p.name}">Book this facial</a>
+        <a href="vip.html#memberships" class="btn btn--outline">View VIP Memberships</a>
+      </div>
+      <p class="vipd__fine">By appointment only · Call or text Vi <a href="tel:+18572188777">(857) 218-8777</a>${v.pay[1].includes("*") ? " · *Final installment may vary slightly due to rounding." : ""}</p>`;
+    vd.classList.add("is-open"); vd.setAttribute("aria-hidden", "false"); lockScroll(true);
+    setTimeout(() => $(".modal__close", vd).focus(), 50);
+  };
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-vipd]");
+    if (t) { e.preventDefault(); openVd(+t.dataset.vipd); }
+  });
+  vd.addEventListener("click", e => {
+    if (e.target.closest("[data-vipd-close]")) closeVd();
+    else if (e.target.closest("[data-book]")) closeVd();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && vd.classList.contains("is-open")) closeVd(); });
+}
 
 /* ---------- Skincare Riman: cả thẻ là link mở cửa hàng Riman ---------- */
 $$("[data-riman]").forEach(el => {
