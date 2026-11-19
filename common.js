@@ -526,7 +526,9 @@ if ($("[data-videos]")) {
     ["fr", "Français", "FR"], ["pt", "Português", "PT"], ["de", "Deutsch", "DE"], ["hi", "हिन्दी", "HI"],
     ["ja", "日本語", "JA"], ["ar", "العربية", "AR"]
   ];
-  const getLang = () => { const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]+\/([^;]+)/); return m ? decodeURIComponent(m[1]) : "en"; };
+  const ownVi = () => { try { return localStorage.getItem("va_lang") === "vi"; } catch (e) { return false; } };
+  const setOwn = v => { try { v ? localStorage.setItem("va_lang", v) : localStorage.removeItem("va_lang"); } catch (e) {} };
+  const getLang = () => { if (ownVi()) return "vi"; const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]+\/([^;]+)/); return m ? decodeURIComponent(m[1]) : "en"; };
   const setCookie = v => {
     const host = location.hostname, parts = host.split(".");
     const doms = ["", host]; if (parts.length > 1) doms.push("." + parts.slice(-2).join("."));
@@ -559,7 +561,9 @@ if ($("[data-videos]")) {
     const code = b.dataset.lang;
     toggle(false);
     if (code === getLang()) return;
-    if (code === "en") { setCookie(""); location.reload(); return; }
+    if (code === "en") { setCookie(""); setOwn(""); location.reload(); return; }
+    if (code === "vi") { setCookie(""); setOwn("vi"); location.reload(); return; }
+    setOwn("");
     setCookie("/en/" + code);
     location.reload();
   });
