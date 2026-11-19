@@ -24,7 +24,7 @@ const SALON = {
    cats: nhóm dịch vụ có tại chi nhánh (dùng để lọc ô chọn dịch vụ khi đặt lịch) */
 /* Form "Free consultation": dán link nhận form vào đây (VD https://formsubmit.co/ajax/email-cua-tiem
    hoặc link Formspree). Để trống thì khách gửi bằng tin nhắn SMS tới số của Vi. */
-const CONSULT_ENDPOINT = "";
+const CONSULT_ENDPOINT = "https://vangelbeauty.com/?rest_route=/vangel/v1/submit";
 
 const LOCATIONS = [
   { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=3", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],

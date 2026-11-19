@@ -1644,3 +1644,6 @@ body { top: 0 !important; position: static; }
   .vipd__head h3 { font-size: 28px; }
 }
 .vipm-card .btn--gold, .vipm-card--dark .btn--gold { color: #fff; }
+
+.book-form__err { margin: 0; color: #b3261e; font-size: 14px; }
+.book-form button:disabled { opacity: .6; cursor: wait; }

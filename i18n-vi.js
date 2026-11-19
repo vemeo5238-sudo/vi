@@ -435,6 +435,7 @@ const VI_DICT = {
   "Date": "Ngày",
   "Time": "Giờ",
   "Notes": "Ghi chú",
+  "We couldn't send your request online. Please call or text Vi at (857) 218-8777.": "Chưa gửi được yêu cầu qua mạng. Vui lòng gọi hoặc nhắn tin cho Vi: (857) 218-8777.",
   "Request appointment": "Gửi yêu cầu đặt lịch",
   "We've received your request and will call to confirm as soon as possible. Need it sooner? Nails:": "Chúng tôi đã nhận yêu cầu và sẽ gọi xác nhận sớm nhất. Cần gấp? Làm móng:",
   "· Vi:": "· Vi:",

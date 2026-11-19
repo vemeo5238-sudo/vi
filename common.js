@@ -159,7 +159,7 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
       <h2 id="bookTitle">Book an appointment</h2>
       <form id="bookForm" class="book-form">
         <label>Full name<input type="text" name="name" required /></label>
-        <label>Phone number<input type="tel" name="phone" required pattern="[0-9 +]{9,15}" /></label>
+        <label>Phone number<input type="tel" name="phone" required pattern="[0-9 +.\(\)\-]{9,20}" /></label>
         <label>Location<select name="branch" id="branchSelect" required>
           ${LOCATIONS.map(l => `<option value="${l.id}">${l.name} — ${l.address}</option>`).join("")}
         </select></label>
@@ -172,6 +172,8 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
           </select></label>
         </div>
         <label>Notes<textarea name="note" rows="2" placeholder="Skin concerns, lash or nail style you'd like…"></textarea></label>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+        <p class="book-form__err" id="bookErr" role="alert" hidden></p>
         <button type="submit" class="btn btn--gold btn--block">Request appointment</button>
       </form>
       <div class="modal-done" id="bookDone" hidden>
@@ -312,11 +314,26 @@ function openBook(service, branch) {
 }
 function closeBook() { modal.classList.remove("is-open"); modal.setAttribute("aria-hidden", "true"); lockScroll(false); }
 
-bookForm.addEventListener("submit", e => {
+/* Gửi lịch hẹn về WordPress (plugin V Angel Bookings): lưu khách + email báo cho tiệm */
+bookForm.addEventListener("submit", async e => {
   e.preventDefault();
-  // TODO: gửi dữ liệu tới Google Sheet / Zalo / email tại đây
-  console.log("Booking:", Object.fromEntries(new FormData(bookForm)));
-  bookForm.hidden = true; bookDone.hidden = false;
+  const d = Object.fromEntries(new FormData(bookForm));
+  const err = $("#bookErr"), btn = $("button[type=submit]", bookForm);
+  err.hidden = true;
+  if (d._honey) return;
+  const loc = LOCATIONS.find(l => l.id === d.branch);
+  btn.disabled = true; const label = btn.textContent; btn.textContent = "Sending…";
+  try {
+    const body = new URLSearchParams({ kind: "booking", name: d.name || "", phone: d.phone || "", service: d.service || "",
+      location: loc ? loc.name : (d.branch || ""), date: d.date || "", time: d.time || "", message: d.note || "", page: location.href });
+    const r = await fetch(CONSULT_ENDPOINT, { method: "POST", body });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.ok) throw new Error(r.status);
+    bookForm.hidden = true; bookDone.hidden = false;
+  } catch (x) {
+    err.textContent = "We couldn't send your request online. Please call or text Vi at (857) 218-8777.";
+    err.hidden = false;
+  } finally { btn.disabled = false; btn.textContent = label; }
 });
 
 /* ---------- Xử lý click chung ---------- */
