@@ -27,7 +27,7 @@ const SALON = {
 const CONSULT_ENDPOINT = "";
 
 const LOCATIONS = [
-  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=2", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
+  { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=3", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "1602 E Robinson Ave #K, Springdale, AR 72764",
     services: ["Nail", "Facial", "Lash", "Lash Lift", "Skincare"],
     cats: ["nail", "facial", "lash", "brow"],
@@ -49,64 +49,68 @@ const LOCATIONS = [
    steps: các mục "Bao gồm" in trên bảng giá */
 const TREATMENTS = [
   // FACIAL — Essential
-  { category: "facial", name: "Hydro Glow Facial", duration: "75 min", price: "$180", badge: "Premium", popular: true, image: "images/svc-hydro-glow-ba.webp",
+  { category: "facial", name: "Hydro Glow Facial", duration: "75 min", price: "$180", badge: "Premium", popular: true, image: "images/svc-hydro-glow.webp?v=5",
     desc: "Hydro dermabrasion deep-cleans, deeply hydrates and infuses serum — skin glows right after your visit.",
     benefits: ["Hydro Dermabrasion", "Deep Hydration", "Instant Glow"],
     steps: ["Hydro Dermabrasion", "Deep Hydration", "Serum Infusion", "Instant Glow"] },
   { category: "facial", name: "Basic Glow Facial", duration: "45 min", price: "$80", badge: "", image: "images/svc-basic-glow.webp",
     desc: "Our essential facial: deep cleansing, exfoliation and a hydrating mask for healthy, glowing skin.",
     steps: ["Deep Cleansing", "Exfoliation", "Hydrating Mask"] },
-  { category: "facial", name: "Deep Pore Facial", duration: "60 min", price: "$100", badge: "", image: "images/svc-deep-pore.webp",
+  { category: "facial", name: "Deep Pore Facial", duration: "60 min", price: "$100", badge: "", image: "images/svc-deep-pore-new.webp",
     desc: "Deep pore cleansing with steam and extractions for clear, refreshed skin.",
     steps: ["Deep Cleansing", "Steam Therapy", "Extractions", "Hydrating Mask"] },
-  { category: "facial", name: "Acne Rescue Facial", duration: "60 min", price: "$120", badge: "", popular: true, image: "images/svc-acne.webp",
+  { category: "facial", name: "Acne Rescue Facial", duration: "60 min", price: "$120", badge: "", popular: true, image: "images/svc-acne-ba.webp?v=2",
     desc: "For acne-prone skin: deep cleansing, antibacterial blue LED light and a calming treatment.",
     steps: ["Deep Cleansing", "LED Blue Light", "Calming Treatment", "Hydrating Mask"] },
   // FACIAL — Premium
-  { category: "facial", name: "Brightening Facial", duration: "60 min", price: "$140", badge: "Premium", image: "images/svc-brightening.webp",
+  { category: "facial", name: "Brightening Facial", duration: "60 min", price: "$140", badge: "Premium", image: "images/svc-brightening-new.webp",
     desc: "Vitamin C and brightening serum with LED light therapy for a more even, radiant complexion.",
     steps: ["Vitamin C Treatment", "Brightening Serum", "LED Light Therapy", "Hydrating Mask"] },
-  { category: "facial", name: "Age-Defying Facial", duration: "75 min", price: "$160", badge: "Premium", image: "images/svc-age-defying.webp",
+  { category: "facial", name: "Age-Defying Facial", duration: "75 min", price: "$160", badge: "Premium", image: "images/svc-age-defying-new.webp",
     desc: "Lifting massage, collagen and anti-aging serum for firmer, younger-looking skin.",
     steps: ["Lifting Massage", "Collagen Treatment", "LED Light Therapy", "Anti-Aging Serum"] },
-  { category: "facial", name: "Skin Renewal Peel", duration: "90 min", price: "$220", badge: "Premium", image: "images/svc-renewal-peel.webp",
+  { category: "facial", name: "Skin Renewal Peel", duration: "90 min", price: "$220", badge: "Premium", image: "images/svc-renewal-peel-mask.webp",
     desc: "A renewing chemical peel that refines skin texture and tone.",
     steps: [] },
 
   // LASH
   { category: "lash", name: "Classic Full Set", duration: "", price: "$110+", badge: "", image: "images/svc-lash-eye.webp",
     desc: "One extension per natural lash — soft, light and natural, just like your own lashes.", steps: [] },
-  { category: "lash", name: "Hybrid Full Set", duration: "", price: "$140+", badge: "", image: "images/svc-lash-hybrid.webp",
+  { category: "lash", name: "Hybrid Full Set", duration: "", price: "$140+", badge: "", image: "images/svc-lash-hybrid-new.webp",
     desc: "A mix of classic and volume for medium fullness with beautiful texture.", steps: [] },
-  { category: "lash", name: "Volume Full Set", duration: "", price: "$170+", badge: "", popular: true, image: "images/svc-lash-closeup.webp",
+  { category: "lash", name: "Volume Full Set", duration: "", price: "$170+", badge: "", popular: true, image: "images/svc-lash-volume-new.webp",
     desc: "Full, fluffy volume lashes with a lifted curl — still lightweight.", steps: [] },
-  { category: "lash", name: "Cluster Lashes (Temporary)", duration: "", price: "$50+", badge: "", image: "",
+  { category: "lash", name: "Wispy Full Set (Wet Set)", duration: "", price: "$160 + $25 & up", badge: "New", image: "images/svc-lash-ba.webp?v=2",
+    desc: "Textured, wispy \u201cwet look\u201d lashes with defined spikes for a soft, editorial finish.", steps: [] },
+  { category: "lash", name: "Mega Volume", duration: "", price: "$200 & up", badge: "New", image: "images/svc-lash-mega.webp?v=2",
+    desc: "Our fullest, darkest set \u2014 ultra-fine fans for maximum drama that still feels light.", steps: [] },
+  { category: "lash", name: "Cluster Lashes (Temporary)", duration: "", price: "$50+", badge: "", image: "images/svc-lash-cluster.webp",
     desc: "Temporary cluster lashes — a quick glam look for parties and events.", steps: [] },
-  { category: "lash", name: "Korean Lash Lift", duration: "", price: "$90+", badge: "", image: "",
+  { category: "lash", name: "Korean Lash Lift", duration: "", price: "$90+", badge: "", image: "images/svc-lash-lift.webp",
     desc: "Korean-style lift and curl for your natural lashes. With tint: $100+.", steps: [] },
 
   // BROW
   { category: "brow", name: "Brow Lamination + Tint", duration: "", price: "$100+", badge: "", image: "images/svc-brow-lamination.webp",
     desc: "Lamination and tint for fuller, groomed, evenly colored brows.", steps: [] },
-  { category: "brow", name: "Brow Shaping Wax", duration: "", price: "$15+", badge: "", image: "",
+  { category: "brow", name: "Brow Shaping Wax", duration: "", price: "$15+", badge: "", image: "images/svc-brow-wax.webp",
     desc: "Wax and shape for brows that flatter your face.", steps: [] },
 
   // NAIL & PEDICURE
-  { category: "nail", name: "Gel Manicure", duration: "", price: "$35", badge: "", popular: true, image: "images/svc-nail-gel.webp",
+  { category: "nail", name: "Gel Manicure", duration: "", price: "$35", badge: "", popular: true, image: "images/svc-nail-gel-new.webp",
     desc: "Nail care with a glossy, long-lasting gel polish. Gel polish change: $25.", steps: [] },
   { category: "nail", name: "Acrylic Full Set", duration: "", price: "$40 & up", badge: "", image: "images/svc-nail-acrylic.webp",
     desc: "Acrylic full set shaped to perfection. White tip from $50, ombre from $60.", steps: [] },
-  { category: "nail", name: "Dipping Powder", duration: "", price: "$40+", badge: "", image: "images/svc-nail-dip.webp",
+  { category: "nail", name: "Dipping Powder", duration: "", price: "$40+", badge: "", image: "images/svc-nail-dip-new.webp",
     desc: "Strong, durable dip powder nails. With paraffin $45, ombré dipping $55.", steps: [] },
   { category: "nail", name: "Nail Art Design", duration: "", price: "+$5 & up", badge: "", image: "images/svc-nail-art.webp",
     desc: "Hand-painted art, gems and effects in the design you love — add to any nail service.", steps: [] },
-  { category: "nail", name: "Volcano Pedicure", duration: "", price: "$73 – $88", badge: "Luxury", image: "",
+  { category: "nail", name: "Volcano Pedicure", duration: "", price: "$73 – $88", badge: "Luxury", image: "images/svc-pedi-volcano.webp",
     desc: "Our most luxurious pedicure. Higher price includes gel polish.",
     steps: ["Detox Volcano Crystal bath soak", "Cuticle trim, sugar scrub, callus removal", "Mud masque, hot paraffin, collagen cream", "Hot stone massage, collagen socks", "Hot towel wrap, hot steam machine, soy massage candle"] },
-  { category: "nail", name: "Collagen Spa Pedicure", duration: "", price: "$63 – $78", badge: "", image: "",
+  { category: "nail", name: "Collagen Spa Pedicure", duration: "", price: "$63 – $78", badge: "", image: "images/svc-pedi-collagen.webp",
     desc: "Organic collagen pedicure with your choice of Milk & Honey or Mint. Higher price includes gel polish.",
     steps: ["Luxury organic sea salt", "Cuticle trim, organic sugar scrub, callus removal", "Organic mud masque, hot stone massage", "Hot paraffin wax, organic cream massage", "Hot towel wrap, collagen socks"] },
-  { category: "nail", name: "Deluxe Pedicure", duration: "", price: "$43 – $58", badge: "", image: "",
+  { category: "nail", name: "Deluxe Pedicure", duration: "", price: "$43 – $58", badge: "", image: "images/svc-pedi-deluxe.webp",
     desc: "Orange or lavender sea salt, hot stone and hot towel wrap. Higher price includes gel polish.",
     steps: ["Orange or lavender sea salt", "Cuticle trim, sugar scrub", "Callus removal, hot stone", "Hot towel wrap"] }
 ];
@@ -139,10 +143,10 @@ const PRICE_MENU = {
   lash: [
     ["Eyelash Extensions — Full Sets", "", [
       ["Cluster Lashes (Temporary)", "$50+"], ["Classic Full Set", "$110+"], ["Hybrid Full Set", "$140+"], ["Volume Full Set", "$170+"],
-      ["Wet Set", "$160+", "Coming soon"], ["Mega Volume", "$200+", "Coming soon"]]],
+      ["Wispy Full Set (Wet Set)", "$160 + $25 & up"], ["Mega Volume", "$200 & up"]]],
     ["Refills", "", [
       ["Cluster Touch-Up", "$30+"], ["Classic Fill", "$60+"], ["Hybrid Fill", "$75+"], ["Volume Fill", "$90+"],
-      ["Wet Set Fill", "$85+", "Coming soon"], ["Mega Volume Fill", "$100+", "Coming soon"]]],
+      ["Wispy (Wet Set) Fill", "$85+"], ["Mega Volume Fill", "$100+"]]],
     ["Lash Lift", "", [
       ["Korean Lash Lift", "$90+"], ["Korean Lash Lift + Tint", "$100+"], ["Lash Tint", "$25+"]]]
   ],

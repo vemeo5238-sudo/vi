@@ -136,7 +136,7 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
       <img class="meet__photo" src="images/founder.webp" alt="Vi, founder of V Angel" loading="lazy" />
       <p class="eyebrow">Our Story</p>
       <h2 id="meetTitle">Hi, I'm Vi — founder of V Angel Facial and Nail Spa.</h2>
-      <p>I built this business on my own, step by step. I have owned my nail salon for 9 years, and 2 years ago I opened our facial and spa side — because I wanted to take care of the whole beauty of a woman, not just her nails.</p>
+      <p>I built this business on my own, step by step. I have owned my nail salon for 10 years, and 2 years ago I opened our facial and spa side — because I wanted to take care of the whole beauty of a woman, not just her nails.</p>
       <p>Everything I do, I do with my heart. I choose products carefully, I work slowly and honestly, and I always aim for the best possible result for your skin — healthy, glowing, and safe.</p>
       <p>I also have 5 years of professional lash experience. I don't do one lash style for everyone — I design the lash style for you, based on your eyes, your face, and the look you want: natural, soft, or bold.</p>
       <p class="meet__lead">That is V Angel: real skill, real care, and real results.</p>
