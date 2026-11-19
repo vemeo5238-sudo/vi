@@ -286,7 +286,7 @@ const RIMAN = [
   { name: "Incellderm EX Line", desc: "Deep nourishment for smoother, brighter, younger-looking skin.", image: "images/riman-ex-line.webp", tag: "Skincare" },
   { name: "Radiansome 100", desc: "An intensive serum for brighter, firmer skin — see the glow in just 5 days.", image: "images/riman-radiansome.webp", tag: "Serum" },
   { name: "Cleanse • Protect • Hydrate", desc: "The complete 3-step routine: cleanse, protect and hydrate every day.", image: "images/riman-icd-set.webp", tag: "3-Step Set" },
-  { name: "Collagen Melting Mask", desc: "A 100% collagen mask for instantly firmer, brighter skin.", image: "", tag: "Mask" }
+  { name: "Collagen Melting Mask", desc: "A 100% collagen mask for instantly firmer, brighter skin.", image: "images/riman-collagen-mask.webp", tag: "Mask" }
 ];
 
 /* ---------- Video (thư mục videos) ----------
