@@ -30,14 +30,14 @@ const LOCATIONS = [
   { id: "springdale", label: "Location 1", name: "Springdale", photo: "images/loc-springdale.webp?v=3", phones: [["Nails", "(479) 717-2557", "+14797172557", "Walk-ins welcome"], ["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "1602 E Robinson Ave #K, Springdale, AR 72764",
     services: ["Nail", "Facial", "Lash", "Lash Lift", "Skincare"],
-    cats: ["nail", "facial", "lash", "brow"],
+    cats: ["nail", "facial", "lash", "brow", "pmu"],
     policy: "Nails: walk-ins welcome or book ahead. Facial, lash, lash lift and skincare: by appointment only.",
     walkin: true,
     hours: [["Monday – Friday", "9:30 AM – 7:00 PM"], ["Saturday", "9:30 AM – 6:00 PM"], ["Sunday", "Closed (facials by appointment)"]] },
   { id: "bentonville", label: "Location 2", name: "Bentonville", photo: "images/loc-bentonville.webp?v=5", phones: [["Facial, Lash, Brow & PMU", "(857) 218-8777", "+18572188777", "(By appointment only)"]],
     address: "Room 6, 1724 SE Moberly Ln, Bentonville, AR 72712",
     services: ["Facial", "Lash", "Brow Lamination", "Lash Lift"],
-    cats: ["facial", "lash", "brow"],
+    cats: ["facial", "lash", "brow", "pmu"],
     policy: "By appointment only.",
     walkin: false,
     hours: [["Hours", "By appointment"]] }
@@ -92,6 +92,22 @@ const TREATMENTS = [
   // BROW
   { category: "brow", name: "Brow Lamination + Tint", duration: "", price: "$100+", badge: "", image: "images/svc-brow-lamination.webp",
     desc: "Lamination and tint for fuller, groomed, evenly colored brows.", steps: [] },
+  // PMU & BROWS (phun xăm chân mày)
+  { category: "pmu", name: "Ombre Shading", duration: "", price: "$249", badge: "Sale", image: "images/svc-pmu-ombre.webp",
+    desc: "Soft powder brows that start light at the front and deepen toward the tail — like your favorite brow pencil, there when you wake up. Regular $399.",
+    steps: ["Best for oily or combination skin", "Soft, filled-in look", "Great if you fill your brows daily"] },
+  { category: "pmu", name: "Combo Brows", duration: "", price: "$349", badge: "Most picked", popular: true, image: "images/svc-pmu-combo.webp",
+    desc: "Fine hairstrokes at the front with soft shading through the body and tail. Natural up close, polished from across the room. Regular $599.",
+    steps: ["Best for sparse fronts", "Natural start, defined tail", "Works on most skin types"] },
+  { category: "pmu", name: "Nano Hairstrokes", duration: "", price: "$499", badge: "Signature", image: "images/svc-pmu-nano.webp",
+    desc: "Very fine strokes placed one at a time with a nano needle, following the way your own hairs grow — our most natural brows. Regular $799.",
+    steps: ["Most natural result", "Best for normal to dry skin", "Fills gaps and thin spots"] },
+  { category: "pmu", name: "Color Correction / Cover Up", duration: "", price: "Quote", badge: "", image: "images/svc-pmu-correction.webp",
+    desc: "Old brows healed blue, gray, red or orange, or a shape you never liked? We neutralize the color and rebuild your brows. Priced after a photo review — text clear, no-makeup photos of your brows first.",
+    steps: ["Fixes faded or discolored brows", "Covers old work you don't love", "Priced after photo review"] },
+  { category: "pmu", name: "PMU Touch-Up", duration: "", price: "$120 – $249", badge: "", image: "images/svc-pmu-touchup.webp",
+    desc: "Refresh light spots, sharpen the shape and bring back the color. 4–6 weeks after your first session $120 · 4–6 months $200 · 8–12 months $249. For brows done at V Angel.",
+    steps: ["4–6 weeks: $120", "4–6 months: $200", "8–12 months: $249"] },
   { category: "brow", name: "Brow Shaping Wax", duration: "", price: "$15+", badge: "", image: "images/svc-brow-wax.webp",
     desc: "Wax and shape for brows that flatter your face.", steps: [] },
 
@@ -184,6 +200,13 @@ const PRICE_MENU = {
       ["Eyebrows", "$15"], ["Lips", "$10"], ["Chin", "$15"], ["Full Face", "$45 & up"], ["Underarms", "$20 & up"],
       ["Half Legs", "$32 & up"], ["Full Legs", "$45 & up"]]]
   ],
+  pmu: [
+    ["Permanent Brows", "Sale prices shown; regular price in small text.", [
+      ["Ombre Shading", "$249", "Regular $399 · soft powder look"], ["Combo Brows", "$349", "Regular $599 · most picked"],
+      ["Nano Hairstrokes", "$499", "Regular $799 · most natural"], ["Color Correction / Cover Up", "Quote", "Priced after photo review"]]],
+    ["Touch-Ups", "For brows done at V Angel.", [
+      ["4–6 weeks after first session", "$120"], ["4–6 months after last session", "$200"], ["8–12 months after last session", "$249"]]]
+  ],
   nail: [
     ["Manicure & Pedicure", "", [
       ["Manicure", "$25"], ["Manicure and Pedicure", "$58"], ["Gel Manicure", "$35"], ["Gel polish change", "$25"], ["Take off", "+$3"],
@@ -247,7 +270,7 @@ const ICONS = {
   lotus: '<svg viewBox="0 0 80 40" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M40 4c6 8 6 20 0 32-6-12-6-24 0-32z"/><path d="M40 36c-8-4-18-6-28-4 6-8 16-10 28 4zm0 0c8-4 18-6 28-4-6-8-16-10-28 4z"/><path d="M40 36c-4-6-12-14-22-16 2 8 10 14 22 16zm0 0c4-6 12-14 22-16-2 8-10 14-22 16z"/></svg>'
 };
 ICONS.brow = '<svg class="card__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 30c8-8 30-10 44-2"/><path d="M14 40c10 8 26 8 36 0"/><circle cx="32" cy="40" r="5"/></svg>';
-const LABELS = { facial: "Facial", lash: "Lash", brow: "Brow", nail: "Nail & Pedicure" };
+const LABELS = { facial: "Facial", lash: "Lash", brow: "Brow", pmu: "PMU & Brows", nail: "Nail & Pedicure" };
 
 /* ---------- Thư viện ảnh (thư mục images/gallery) ---------- */
 const GALLERY = {
@@ -269,6 +292,11 @@ const GALLERY = {
   ],
   rituals: [
     ["ritual-3", "Gilded Rest"], ["ritual-1", "Scalp Reset"], ["ritual-2", "The Root Ritual"], ["ritual-4", "Before the Glow"]
+  ],
+  pmu: [
+    ["pmu-1", "Before & after — PMU brows"], ["pmu-2", "Before & after — PMU brows"], ["pmu-3", "Before & after — PMU brows"],
+    ["pmu-4", "Before & after — soft powder"], ["pmu-5", "Before & after — combo brows"], ["pmu-6", "Nano combo brows"],
+    ["pmu-7", "Nano combo brows, two angles"], ["pmu-8", "Fresh brows, right after"], ["pmu-9", "Brow mapping before we start"]
   ],
   nails: [
     ["nail-1", "Pastel pink with line art & gems"], ["nail-2", "Red & black swirl stilettos"], ["nail-3", "White French with leaf art"],

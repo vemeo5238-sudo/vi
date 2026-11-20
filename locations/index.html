@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!--va-base--><script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:(?:services|locations|vip)(?:\/[a-z-]+)?\/?(?:index\.html)?|[a-z-]+\.html)?$/);var b=m?m[1]:"/";document.write('<base href="'+b+'">');var o=p.match(/\/(treatments|salon|vip)\.html$/);if(o){var r={treatments:"services/",salon:"locations/",vip:"vip/"}[o[1]],q=new URLSearchParams(location.search),c=q.get("loai");if(o[1]==="treatments"&&c){r+=c+"/";q.delete("loai");}var s=q.toString();location.replace(b+r+(s?"?"+s:"")+location.hash);}})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Locations — V Angel Facial &amp; Nail Spa | Springdale &amp; Bentonville, AR</title>
+  <meta name="description" content="V Angel locations in Springdale and Bentonville, AR: addresses, hours, booking policy, directions, specials and FAQ." />
+  <link rel="icon" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20261121b" />
+</head>
+<body data-page="salon">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- Hero -->
+    <section class="salon-hero">
+      <img class="salon-hero__bg" src="images/salon-room2.webp" alt="" aria-hidden="true" />
+      <div class="container salon-hero__inner">
+        <nav class="crumbs crumbs--light" aria-label="Breadcrumb"><a href="./">Home</a> / <span>Locations</span></nav>
+        <p class="eyebrow eyebrow--gold" id="salonArea"></p>
+        <h1>V Angel <em>Facial &amp; Nail Spa</em></h1>
+        <p class="salon-hero__lead">Two locations in Springdale and Bentonville — warm, luxurious spaces where every facial, lash and nail service is done with care and detail.</p>
+        <div class="btn-row">
+          <a href="#springdale" class="btn btn--gold">Springdale</a>
+          <a href="#bentonville" class="btn btn--ghost">Bentonville</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chi nhánh -->
+    <section class="section branches">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">2 locations</p>
+          <h2>Choose the location nearest you</h2>
+          <p>Nails: <a href="tel:+14797172557" class="link-gold">(479) 717-2557</a> · Facial, lash, skincare — Vi: <a href="tel:+18572188777" class="link-gold">(857) 218-8777</a></p>
+        </div>
+        <div class="locs" id="branchList"></div>
+        <div class="contact__bar" id="salonSocial"></div>
+      </div>
+    </section>
+
+    <!-- Người sáng lập -->
+    <section class="section founder-mini">
+      <div class="container founder-mini__inner reveal">
+        <img src="images/founder.webp" alt="Vi — founder of V Angel" loading="lazy" />
+        <div>
+          <p class="eyebrow">Meet the founder</p>
+          <blockquote>“Everything I do, I do with my heart.”</blockquote>
+          <p><strong>Vi</strong> — 10 years nail salon owner, 5 years professional lash artist, and founder of V Angel Facial and Nail Spa.</p>
+          <a href="#" class="link-gold" data-meet>Read our story →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Không gian -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">The space</p>
+          <h2>Where beauty becomes a ritual</h2>
+          <p>Private facial rooms, warm lighting and every tool carefully prepared before you arrive.</p>
+        </div>
+        <div class="gallery gallery--5" data-gallery="space"></div>
+      </div>
+    </section>
+
+    <!-- Ưu đãi -->
+    <section class="section" id="uu-dai">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Highlights</p>
+          <h2>Specials &amp; highlights</h2>
+        </div>
+        <div class="offers" id="offerList"></div>
+      </div>
+    </section>
+
+    <!-- Dịch vụ -->
+    <section class="section section--alt" id="dich-vu">
+      <div class="container">
+        <div class="section-head section-head--row reveal">
+          <div>
+            <p class="eyebrow">Menu</p>
+            <h2>Services at our salons</h2>
+            <p>Treatments you can book at V Angel.</p>
+          </div>
+          <a href="services/#bang-gia" class="link-gold">View full price list →</a>
+        </div>
+        <div class="filter" role="tablist" aria-label="Filter services" id="salonFilter">
+          <button class="filter__btn is-active" data-filter="facial">Facial</button>
+          <button class="filter__btn" data-filter="lash">Lash</button>
+          <button class="filter__btn" data-filter="brow">Brow</button>
+          <button class="filter__btn" data-filter="pmu">PMU & Brows</button>
+          <button class="filter__btn" data-filter="nail">Nail & Pedicure</button>
+        </div>
+        <p class="salon-note">Nails &amp; pedicures are available at our Springdale location only. Bentonville: facials, lashes, brow lamination and lash lift.</p>
+        <div class="grid grid--4" id="salonGrid"></div>
+      </div>
+    </section>
+
+    <!-- Chỉ đường -->
+    <section class="section">
+      <div class="container getthere">
+        <div class="getthere__text reveal">
+          <p class="eyebrow">Getting there</p>
+          <h2>How do I get to V Angel?</h2>
+          <div class="filter filter--left" id="mapTabs">
+            <button class="filter__btn is-active" data-map="springdale">Springdale</button>
+            <button class="filter__btn" data-map="bentonville">Bentonville</button>
+          </div>
+          <p id="mapAddr" class="map__addr"></p>
+          <ul class="ticks" id="mapTips"></ul>
+          <a id="mapLink" class="btn btn--outline" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="map reveal"><iframe id="mapFrame" title="V Angel map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
+    </section>
+
+    <!-- Lần đầu ghé -->
+    <section class="section section--dark">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow eyebrow--gold">Your first visit</p>
+          <h2>What should I know before my first visit?</h2>
+        </div>
+        <ol class="steps">
+          <li class="reveal"><span>01</span><h3>Arrive 10 minutes early</h3><p>Relax, enjoy some tea and fill out your consultation form.</p></li>
+          <li class="reveal"><span>02</span><h3>Come with a clean face</h3><p>For facials, no makeup helps us analyze your skin accurately.</p></li>
+          <li class="reveal"><span>03</span><h3>Bring inspiration photos</h3><p>Show us the lash or nail look you love so we get it just right.</p></li>
+          <li class="reveal"><span>04</span><h3>Tell us about allergies</h3><p>Let us know about any medications or past allergic reactions.</p></li>
+        </ol>
+        <div class="btn-row btn-row--center" style="margin-top:44px"><a href="#" class="btn btn--gold" data-book>Book Now</a></div>
+      </div>
+    </section>
+
+    <!-- Vấn đề da -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Skin concerns</p>
+          <h2>What would you like to work on?</h2>
+        </div>
+        <div class="concerns reveal">
+          <a href="#" data-book="Acne Rescue Facial">Acne &amp; oily skin</a>
+          <a href="#" data-book="Hydro Glow Facial">Dryness</a>
+          <a href="#" data-book="Age-Defying Facial">Aging &amp; fine lines</a>
+          <a href="#" data-book="Brightening Facial">Dark spots &amp; pigmentation</a>
+          <a href="#" data-book="Deep Pore Facial">Enlarged pores</a>
+          <a href="#" data-book="Basic Glow Facial">Dullness</a>
+          <a href="#" data-book="Skin Renewal Peel">Uneven texture</a>
+          <a href="#" data-book="Acne Rescue Facial">Sensitive skin</a>
+          <a href="#" data-book="Volume Full Set">Thin lashes</a>
+          <a href="#" data-book="Brow Lamination + Tint">Sparse brows</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Đánh giá -->
+    <section class="reviews section--alt">
+      <div class="container">
+        <p class="eyebrow">Google Reviews</p>
+        <h2 class="section-title">What our clients say</h2>
+        <div class="reviews__track" id="reviewList"></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container faq">
+        <div class="section-head reveal">
+          <p class="eyebrow">Questions</p>
+          <h2>Frequently asked questions</h2>
+        </div>
+        <div class="faq__list" id="faqList"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="data.js?v=20261121a"></script>
+  <script src="i18n-vi.js?v=20261121b"></script>
+  <script src="common.js?v=20261121c"></script>
+  <script>
+    $("#salonArea").textContent = SALON.area;
+    $("#branchList").innerHTML = LOCATIONS.map(l => `<div id="${l.id}" class="loc-anchor">${locationCard(l)}</div>`).join("");
+    $("#salonSocial").innerHTML = socialHTML();
+
+    $("#offerList").innerHTML = OFFERS.map((o, i) => `
+      <div class="offer reveal is-in"><strong>${o.big}</strong><h3>${o.title}</h3><p>${o.sub}</p>
+      ${i === 0 ? '<a href="#" class="link-gold" data-book>Book →</a>' : ""}</div>`).join("");
+
+    const sf = $("#salonFilter");
+    function showCat(c) {
+      $$(".filter__btn", sf).forEach(b => b.classList.toggle("is-active", b.dataset.filter === c));
+      $("#salonGrid").innerHTML = TREATMENTS.filter(t => t.category === c).map(treatmentCard).join("");
+    }
+    sf.addEventListener("click", e => { const b = e.target.closest("[data-filter]"); if (b) showCat(b.dataset.filter); });
+    showCat("facial");
+
+    const TIPS = {
+      springdale: ["Location 1 — Suite #K on E Robinson Ave", "Nail walk-ins welcome; facials, lashes and lash lift by appointment", "Need directions? Call <a href=\"tel:+14797172557\">(479) 717-2557</a>"],
+      bentonville: ["Location 2 — Room 6, 1724 SE Moberly Ln", "By appointment only", "To book or for directions, call Vi at <a href=\"tel:+18572188777\">(857) 218-8777</a>"]
+    };
+    function showMap(id) {
+      const l = LOCATIONS.find(x => x.id === id), q = encodeURIComponent(l.address);
+      $$("#mapTabs .filter__btn").forEach(b => b.classList.toggle("is-active", b.dataset.map === id));
+      $("#mapAddr").textContent = l.address;
+      $("#mapTips").innerHTML = TIPS[id].map(t => `<li>${t}</li>`).join("");
+      $("#mapLink").href = "https://www.google.com/maps/search/?api=1&query=" + q;
+      $("#mapFrame").src = "https://www.google.com/maps?q=" + q + "&output=embed";
+    }
+    $("#mapTabs").addEventListener("click", e => { const b = e.target.closest("[data-map]"); if (b) showMap(b.dataset.map); });
+    showMap(location.hash === "#bentonville" ? "bentonville" : "springdale");
+
+    $("#reviewList").innerHTML = REVIEWS.slice(0, 3).map(reviewCard).join("");
+    $("#faqList").innerHTML = FAQS.map(([qq, a], i) => `
+      <details class="faq__item"${i === 0 ? " open" : ""}><summary>${qq}</summary><p>${a}</p></details>`).join("");
+  </script>
+</body>
+</html>

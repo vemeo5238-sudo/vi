@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!--va-base--><script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:(?:services|locations|vip)(?:\/[a-z-]+)?\/?(?:index\.html)?|[a-z-]+\.html)?$/);var b=m?m[1]:"/";document.write('<base href="'+b+'">');var o=p.match(/\/(treatments|salon|vip)\.html$/);if(o){var r={treatments:"services/",salon:"locations/",vip:"vip/"}[o[1]],q=new URLSearchParams(location.search),c=q.get("loai");if(o[1]==="treatments"&&c){r+=c+"/";q.delete("loai");}var s=q.toString();location.replace(b+r+(s?"?"+s:"")+location.hash);}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Locations — V Angel Facial &amp; Nail Spa | Springdale &amp; Bentonville, AR</title>
   <meta name="description" content="V Angel locations in Springdale and Bentonville, AR: addresses, hours, booking policy, directions, specials and FAQ." />
@@ -9,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261120e" />
+  <link rel="stylesheet" href="style.css?v=20261121b" />
 </head>
 <body data-page="salon">
   <div id="site-header"></div>
@@ -19,7 +20,7 @@
     <section class="salon-hero">
       <img class="salon-hero__bg" src="images/salon-room2.webp" alt="" aria-hidden="true" />
       <div class="container salon-hero__inner">
-        <nav class="crumbs crumbs--light" aria-label="Breadcrumb"><a href="index.html">Home</a> / <span>Locations</span></nav>
+        <nav class="crumbs crumbs--light" aria-label="Breadcrumb"><a href="./">Home</a> / <span>Locations</span></nav>
         <p class="eyebrow eyebrow--gold" id="salonArea"></p>
         <h1>V Angel <em>Facial &amp; Nail Spa</em></h1>
         <p class="salon-hero__lead">Two locations in Springdale and Bentonville — warm, luxurious spaces where every facial, lash and nail service is done with care and detail.</p>
@@ -88,12 +89,13 @@
             <h2>Services at our salons</h2>
             <p>Treatments you can book at V Angel.</p>
           </div>
-          <a href="treatments.html#bang-gia" class="link-gold">View full price list →</a>
+          <a href="services/#bang-gia" class="link-gold">View full price list →</a>
         </div>
         <div class="filter" role="tablist" aria-label="Filter services" id="salonFilter">
           <button class="filter__btn is-active" data-filter="facial">Facial</button>
           <button class="filter__btn" data-filter="lash">Lash</button>
           <button class="filter__btn" data-filter="brow">Brow</button>
+          <button class="filter__btn" data-filter="pmu">PMU & Brows</button>
           <button class="filter__btn" data-filter="nail">Nail & Pedicure</button>
         </div>
         <p class="salon-note">Nails &amp; pedicures are available at our Springdale location only. Bentonville: facials, lashes, brow lamination and lash lift.</p>
@@ -181,9 +183,9 @@
 
   <div id="site-footer"></div>
 
-  <script src="data.js?v=20261120g"></script>
-  <script src="i18n-vi.js?v=20261120d"></script>
-  <script src="common.js?v=20261120g"></script>
+  <script src="data.js?v=20261121a"></script>
+  <script src="i18n-vi.js?v=20261121b"></script>
+  <script src="common.js?v=20261121c"></script>
   <script>
     $("#salonArea").textContent = SALON.area;
     $("#branchList").innerHTML = LOCATIONS.map(l => `<div id="${l.id}" class="loc-anchor">${locationCard(l)}</div>`).join("");

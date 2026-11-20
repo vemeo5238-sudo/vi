@@ -22,10 +22,10 @@ function socialHTML(extra = "") {
 
 /* ---------- Header ---------- */
 const NAV = [
-  ["treatments", "treatments.html", "Services"],
-  ["prices", "treatments.html#bang-gia", "Price List"],
-  ["salon", "salon.html", "Locations"],
-  ["vip", "vip.html", "VIP Membership"]
+  ["treatments", "services/", "Services"],
+  ["prices", "services/#bang-gia", "Price List"],
+  ["salon", "locations/", "Locations"],
+  ["vip", "vip/", "VIP Membership"]
 ];
 
 $("#site-header").outerHTML = `
@@ -36,7 +36,7 @@ $("#site-header").outerHTML = `
   <header class="header" id="top">
     <div class="container header__inner">
       <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-      <a href="index.html" class="header__logo" aria-label="V Angel - Home">
+      <a href="./" class="header__logo" aria-label="V Angel - Home">
         <img src="images/logo-header.webp" alt="V Angel — Facial • Lash • Nail" width="700" height="261" />
       </a>
       <nav class="nav" aria-label="Main menu">
@@ -46,13 +46,13 @@ $("#site-header").outerHTML = `
       <div class="header__right">
         <button class="hicon" data-search-open aria-label="Search services"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
         <a class="hicon" href="${typeof RIMAN_LINK !== "undefined" ? RIMAN_LINK : "#"}" target="_blank" rel="noopener" aria-label="Shop Riman skincare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a>
-        <a class="hicon" href="salon.html" aria-label="Locations &amp; contact"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
+        <a class="hicon" href="locations/" aria-label="Locations &amp; contact"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
         <a href="#" class="btn btn--gold header__cta" data-book>Book Now</a>
       </div>
     </div>
   </header>
   <div class="search-panel" id="searchPanel" aria-hidden="true">
-    <form class="search-panel__form" action="treatments.html" role="search">
+    <form class="search-panel__form" action="services/" role="search">
       <input type="search" name="q" placeholder="Search treatments, products, or ask a question" aria-label="Search treatments" />
       <button type="submit" class="btn btn--gold">Search</button>
       <button type="button" class="search-panel__close" data-search-close aria-label="Close search">×</button>
@@ -89,31 +89,31 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
       <div class="fx__cols">
         <details class="fx__acc">
           <summary>Services<span class="fx__plus" aria-hidden="true"></span></summary>
-          <a href="treatments.html?loai=facial">Facials</a>
-          <a href="treatments.html?loai=lash">Lash extensions &amp; lash lift</a>
-          <a href="treatments.html?loai=brow">Brows &amp; waxing</a>
-          <a href="treatments.html?loai=nail">Nails &amp; pedicures</a>
-          <a href="treatments.html#bang-gia">Full price list</a>
+          <a href="services/facial/">Facials</a>
+          <a href="services/lash/">Lash extensions &amp; lash lift</a>
+          <a href="services/brow/">Brows &amp; waxing</a>
+          <a href="services/nail/">Nails &amp; pedicures</a>
+          <a href="services/#bang-gia">Full price list</a>
         </details>
         <details class="fx__acc">
           <summary>Spas<span class="fx__plus" aria-hidden="true"></span></summary>
-          <a href="salon.html#springdale">Springdale</a>
-          <a href="salon.html#bentonville">Bentonville</a>
-          <a href="salon.html#uu-dai">Spa offers</a>
+          <a href="locations/#springdale">Springdale</a>
+          <a href="locations/#bentonville">Bentonville</a>
+          <a href="locations/#uu-dai">Spa offers</a>
           <a href="#" data-book>Book an appointment</a>
         </details>
         <details class="fx__acc">
           <summary>Shop<span class="fx__plus" aria-hidden="true"></span></summary>
           <a href="${typeof RIMAN_LINK !== "undefined" ? RIMAN_LINK : "#"}" target="_blank" rel="noopener">Riman Incellderm skincare ↗</a>
-          <a href="index.html#riman">Featured products</a>
+          <a href="./#riman">Featured products</a>
           <a href="sms:${SALON.ownerLink}">Ask Vi for a recommendation</a>
         </details>
         <details class="fx__acc">
           <summary>Help<span class="fx__plus" aria-hidden="true"></span></summary>
-          <a href="salon.html#faq">FAQ</a>
+          <a href="locations/#faq">FAQ</a>
           <a href="tel:${SALON.phoneLink}">Nails: ${SALON.phone}</a>
           <a href="tel:${SALON.ownerLink}">Facial, lash &amp; skincare (Vi): ${SALON.owner}</a>
-          <a href="salon.html">Directions &amp; hours</a>
+          <a href="locations/">Directions &amp; hours</a>
         </details>
       </div>
       <div class="fx__social">${socialHTML()}</div>
@@ -125,7 +125,7 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
     </div>
     <div class="fx__bottom">
       <nav class="fx__legal" aria-label="Footer">
-        <a href="treatments.html#bang-gia">Price list</a><a href="vip.html">VIP Membership</a><a href="salon.html">Locations</a><a href="salon.html#faq">FAQ</a><a href="#" data-book>Book now</a><a href="#top">Back to top</a>
+        <a href="services/#bang-gia">Price list</a><a href="vip/">VIP Membership</a><a href="locations/">Locations</a><a href="locations/#faq">FAQ</a><a href="#" data-book>Book now</a><a href="#top">Back to top</a>
       </nav>
       <p class="fx__copy">© ${new Date().getFullYear()} V Angel Facial &amp; Nail Spa</p>
     </div>
@@ -216,7 +216,7 @@ function locPhotoCard(l) {
         <div class="lphoto__svcs">${(l.phones || []).map(([lbl, num, link, note]) => `
           <div class="lphoto__svc"><strong>${lbl}</strong><a href="tel:${link}">${num}</a>${note ? `<em>${note}</em>` : ""}</div>`).join("")}
         </div>
-        <a class="lphoto__visit" href="salon.html#${l.id}">Visit this spa</a>
+        <a class="lphoto__visit" href="locations/#${l.id}">Visit this spa</a>
       </div>
     </article>`;
 }
@@ -440,7 +440,7 @@ $$("[data-platinum]").forEach(el => {
       <h3 class="vip__title">VIP Member<br />Package</h3>
       <span class="vip__rule" aria-hidden="true"></span>
       <p class="vip__sub">Platinum Facial Collection</p>
-      <a href="vip.html" class="vip__more">View VIP Memberships →</a>
+      <a href="vip/" class="vip__more">View VIP Memberships →</a>
     </div>
     <div class="platinum__tiers">${PLATINUM.map((p, i) => `
       <div class="tier tier--${p.tier.toLowerCase().replace(/\s+/g, "-")}">
@@ -493,7 +493,7 @@ if ($("[data-platinum]")) {
       </div>
       <div class="vipd__actions">
         <a href="#" class="btn btn--gold" data-book="${p.name}">Book this facial</a>
-        <a href="vip.html#memberships" class="btn btn--outline">View VIP Memberships</a>
+        <a href="vip/#memberships" class="btn btn--outline">View VIP Memberships</a>
       </div>
       <p class="vipd__fine">By appointment only · Call or text Vi <a href="tel:+18572188777">(857) 218-8777</a>${v.pay[1].includes("*") ? " · *Final installment may vary slightly due to rounding." : ""}</p>`;
     vd.classList.add("is-open"); vd.setAttribute("aria-hidden", "false"); lockScroll(true);
@@ -627,3 +627,15 @@ if ($("[data-videos]")) {
   s.src = "https://translate.google.com/translate_a/element.js?cb=vaGtInit"; s.async = true;
   document.body.appendChild(s);
 })();
+
+
+/* Có thẻ <base> nên link "#muc" phải tự cuộn trong trang hiện tại */
+document.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a || e.defaultPrevented) return;
+  const id = a.getAttribute("href").slice(1);
+  e.preventDefault();
+  if (!id) return;
+  const el = id === "top" ? document.body : document.getElementById(id);
+  if (el) { el.scrollIntoView({ behavior: "smooth" }); history.replaceState(null, "", location.pathname + location.search + "#" + id); }
+});
