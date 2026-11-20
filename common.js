@@ -252,12 +252,15 @@ function treatmentCard(t, i = 0) {
       <div class="card__body">
         <h3 class="card__title">${t.name}</h3>
         <div class="card__meta">${t.duration ? `<span>${t.duration}</span><span class="dot"></span>` : ""}<span class="card__price">${t.price}</span></div>
+        ${t.priceNote ? `<p class="card__pricenote">${t.priceNote}</p>` : ""}
         <p class="card__desc">${t.desc}</p>
+        ${t.chips ? `<div class="card__chips">${t.chips.map(x => `<span>${x}</span>`).join("")}</div>` : ""}
+        ${t.notice ? `<div class="card__notice"><strong>${t.notice[0]}</strong><p>${t.notice[1]}</p></div>` : ""}
         ${t.steps && t.steps.length ? `<details class="card__more">
           <summary>Includes</summary>
           <ul>${t.steps.map(s => `<li>${s}</li>`).join("")}</ul>
         </details>` : ""}
-        <div class="card__actions"><a href="#" class="btn btn--outline" data-book="${t.name}">Book</a></div>
+        <div class="card__actions${t.cta ? " card__actions--two" : ""}"><a href="#" class="btn btn--outline" data-book="${t.name}">Book</a>${t.cta ? `<a href="${t.cta[1]}" class="btn btn--ghost card__cta2">${t.cta[0]}</a>` : ""}</div>
       </div>
     </article>`;
 }

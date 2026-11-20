@@ -96,15 +96,18 @@ const TREATMENTS = [
   { category: "pmu", name: "Ombre Shading", duration: "", price: "$249", badge: "Sale", image: "images/svc-pmu-ombre.webp",
     desc: "Soft powder brows that start light at the front and deepen toward the tail — like your favorite brow pencil, there when you wake up. Regular $399.",
     steps: ["Best for oily or combination skin", "Soft, filled-in look", "Great if you fill your brows daily"] },
-  { category: "pmu", name: "Combo Brows", duration: "", price: "$349", badge: "Most picked", popular: true, image: "images/svc-pmu-combo.webp",
+  { category: "pmu", name: "Combo Brows", duration: "", price: "$349", badge: "Most picked", popular: true, image: "images/svc-pmu-combo-ba.webp",
     desc: "Fine hairstrokes at the front with soft shading through the body and tail. Natural up close, polished from across the room. Regular $599.",
     steps: ["Best for sparse fronts", "Natural start, defined tail", "Works on most skin types"] },
   { category: "pmu", name: "Nano Hairstrokes", duration: "", price: "$499", badge: "Signature", image: "images/svc-pmu-nano.webp",
     desc: "Very fine strokes placed one at a time with a nano needle, following the way your own hairs grow — our most natural brows. Regular $799.",
     steps: ["Most natural result", "Best for normal to dry skin", "Fills gaps and thin spots"] },
-  { category: "pmu", name: "Color Correction / Cover Up", duration: "", price: "Quote", badge: "", image: "images/svc-pmu-correction.webp",
-    desc: "Old brows healed blue, gray, red or orange, or a shape you never liked? We neutralize the color and rebuild your brows. Priced after a photo review — text clear, no-makeup photos of your brows first.",
-    steps: ["Fixes faded or discolored brows", "Covers old work you don't love", "Priced after photo review"] },
+  { category: "pmu", name: "Color Correction / Cover Up", duration: "", price: "No fixed price", priceNote: "Price upon consultation", badge: "", image: "images/svc-pmu-correction.webp",
+    desc: "Old brows that healed blue, gray, red or orange? A shape you never liked? We neutralize the unwanted color and rebuild your brows so you can go bare-faced again.",
+    chips: ["Fixes faded or discolored brows", "Covers old work you don't love"],
+    notice: ["Before you book", "This service can't be booked online until our brow artist sees your brows. Send clear photos of your current brows with no makeup first. After she reviews them, she'll send your price and open times."],
+    cta: ["Text brow photos", "sms:+18572188777"],
+    steps: [] },
   { category: "pmu", name: "PMU Touch-Up", duration: "", price: "$120 – $249", badge: "", image: "images/svc-pmu-touchup.webp",
     desc: "Refresh light spots, sharpen the shape and bring back the color. 4–6 weeks after your first session $120 · 4–6 months $200 · 8–12 months $249. For brows done at V Angel.",
     steps: ["4–6 weeks: $120", "4–6 months: $200", "8–12 months: $249"] },
@@ -203,7 +206,7 @@ const PRICE_MENU = {
   pmu: [
     ["Permanent Brows", "Sale prices shown; regular price in small text.", [
       ["Ombre Shading", "$249", "Regular $399 · soft powder look"], ["Combo Brows", "$349", "Regular $599 · most picked"],
-      ["Nano Hairstrokes", "$499", "Regular $799 · most natural"], ["Color Correction / Cover Up", "Quote", "Priced after photo review"]]],
+      ["Nano Hairstrokes", "$499", "Regular $799 · most natural"], ["Color Correction / Cover Up", "No fixed price", "Price upon consultation"]]],
     ["Touch-Ups", "For brows done at V Angel.", [
       ["4–6 weeks after first session", "$120"], ["4–6 months after last session", "$200"], ["8–12 months after last session", "$249"]]]
   ],
