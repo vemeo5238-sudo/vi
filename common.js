@@ -173,12 +173,14 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
         </div>
         <label>Notes<textarea name="note" rows="2" placeholder="Skin concerns, lash or nail style you'd like…"></textarea></label>
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+        <p class="book-form__deposit">A $${DEPOSIT.amount} deposit holds your appointment and is applied to your service total. You'll see how to pay after you send your request.</p>
         <p class="book-form__err" id="bookErr" role="alert" hidden></p>
         <button type="submit" class="btn btn--gold btn--block">Request appointment</button>
       </form>
       <div class="modal-done" id="bookDone" hidden>
         <h3>Thank you!</h3>
         <p>We've received your request and will call to confirm as soon as possible. Need it sooner? Nails: <a href="tel:${SALON.phoneLink}">${SALON.phone}</a> · Vi: <a href="tel:${SALON.ownerLink}">${SALON.owner}</a></p>
+        <div class="deposit" id="depositBox" hidden></div>
         <button class="btn btn--outline" data-close>Close</button>
       </div>
     </div>
@@ -338,6 +340,7 @@ bookForm.addEventListener("submit", async e => {
     }
     if (!r.ok || !j.ok) throw new Error(r.status);
     bookForm.hidden = true; bookDone.hidden = false;
+    showDeposit(d);
   } catch (x) {
     err.textContent = "We couldn't send your request online. Please call or text Vi at (857) 218-8777.";
     err.hidden = false;
@@ -641,4 +644,39 @@ document.addEventListener("click", e => {
   if (!id) return;
   const el = id === "top" ? document.body : document.getElementById(id);
   if (el) { el.scrollIntoView({ behavior: "smooth" }); history.replaceState(null, "", location.pathname + location.search + "#" + id); }
+});
+
+
+/* ---------- Đặt cọc qua Zelle / Venmo / Cash App ---------- */
+function showDeposit(d) {
+  const box = $("#depositBox");
+  if (!box || typeof DEPOSIT === "undefined") return;
+  const amt = DEPOSIT.amount;
+  const memo = `${(d.name || "").trim() || "Client"} ${d.date || ""} ${d.service || ""}`.replace(/\s+/g, " ").trim();
+  const rows = [];
+  if (DEPOSIT.venmo) {
+    const u = DEPOSIT.venmo.replace(/^@/, "");
+    rows.push(`<a class="deposit__btn deposit__btn--venmo" target="_blank" rel="noopener" href="https://venmo.com/u/${encodeURIComponent(u)}?txn=pay&amount=${amt}&note=${encodeURIComponent("Deposit: " + memo)}"><strong>Venmo</strong><span>@${u}</span></a>`);
+  }
+  if (DEPOSIT.cashapp) {
+    const t = DEPOSIT.cashapp.replace(/^\$/, "");
+    rows.push(`<a class="deposit__btn deposit__btn--cash" target="_blank" rel="noopener" href="https://cash.app/$${encodeURIComponent(t)}/${amt}"><strong>Cash App</strong><span>$${t}</span></a>`);
+  }
+  if (DEPOSIT.zelle) {
+    rows.push(`<div class="deposit__btn deposit__btn--zelle"><strong>Zelle</strong><span>${DEPOSIT.zelle}${DEPOSIT.zelleName ? " · " + DEPOSIT.zelleName : ""}</span><button type="button" class="deposit__copy" data-copy="${DEPOSIT.zelle}">Copy</button></div>`);
+  }
+  if (!rows.length) { box.hidden = true; return; }
+  box.innerHTML = `
+    <p class="deposit__title">Pay your $${amt} deposit to hold your spot</p>
+    <div class="deposit__list">${rows.join("")}</div>
+    <p class="deposit__memo">Please add this note to your payment: <strong>${memo}</strong> <button type="button" class="deposit__copy" data-copy="${memo}">Copy</button></p>
+    <p class="deposit__fine">Your deposit is applied to your service total. We'll confirm your appointment once it arrives.</p>`;
+  box.hidden = false;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest(".deposit__copy");
+  if (!b) return;
+  const txt = b.dataset.copy;
+  const done = () => { const o = b.textContent; b.textContent = "Copied ✓"; setTimeout(() => (b.textContent = o), 1500); };
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, done); else done();
 });

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: V Angel Bookings
  * Description: Lưu khách đặt lịch / yêu cầu tư vấn từ website V Angel và gửi email báo cho tiệm. Xem tại menu "Khách đặt lịch".
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: V Angel
  * Text Domain: vangel-bookings
  */
@@ -189,6 +189,7 @@ function vangel_bk_submit( WP_REST_Request $req ) {
 		update_post_meta( $id, '_va_' . $k, $v );
 	}
 	update_post_meta( $id, '_va_status', 'new' );
+	update_post_meta( $id, '_va_deposit', 'booking' === $kind ? 'pending' : 'none' );
 
 	// Email báo cho tiệm.
 	$labels = vangel_bk_fields();
@@ -199,6 +200,9 @@ function vangel_bk_submit( WP_REST_Request $req ) {
 		}
 		$val     = 'kind' === $k ? vangel_bk_kind_label( $d[ $k ] ) : $d[ $k ];
 		$lines[] = $label . ': ' . $val;
+	}
+	if ( 'booking' === $kind ) {
+		$lines[] = 'Đặt cọc: $25 — CHƯA xác nhận (khách chuyển qua Zelle hoặc Venmo). Khi thấy tiền về, mở khách này và chọn "Đã cọc".';
 	}
 	$lines[] = '';
 	$lines[] = 'Xem tất cả khách: ' . admin_url( 'edit.php?post_type=va_booking' );
@@ -224,6 +228,7 @@ add_filter( 'manage_va_booking_posts_columns', function () {
 		'va_service'  => 'Dịch vụ',
 		'va_location' => 'Chi nhánh',
 		'va_when'     => 'Ngày giờ hẹn',
+		'va_deposit'  => 'Cọc',
 		'va_status'   => 'Trạng thái',
 		'date'        => 'Gửi lúc',
 	);
@@ -253,6 +258,16 @@ add_action( 'manage_va_booking_posts_custom_column', function ( $col, $id ) {
 			break;
 		case 'va_when':
 			echo esc_html( trim( $m( 'date' ) . ' ' . $m( 'time' ) ) ?: '—' );
+			break;
+		case 'va_deposit':
+			$dp  = $m( 'deposit' );
+			if ( 'paid' === $dp ) {
+				echo '<span style="color:#00a32a;font-weight:600">Đã cọc</span>';
+			} elseif ( 'pending' === $dp ) {
+				echo '<span style="color:#d63638;font-weight:600">Chưa cọc</span>';
+			} else {
+				echo '—';
+			}
 			break;
 		case 'va_status':
 			$s   = $m( 'status' ) ?: 'new';
@@ -299,6 +314,12 @@ add_action( 'add_meta_boxes_va_booking', function () {
 		}
 		echo '</select></td></tr>';
 		echo '<tr><th>Ghi chú / câu hỏi</th><td><textarea class="large-text" rows="3" name="va[message]">' . esc_textarea( $m( 'message' ) ) . '</textarea></td></tr>';
+		$dp = $m( 'deposit' ) ?: ( 'booking' === $kind ? 'pending' : 'none' );
+		echo '<tr><th>Đặt cọc $25</th><td><select name="va_deposit">';
+		foreach ( array( 'pending' => 'Chưa cọc', 'paid' => 'Đã cọc', 'none' => 'Không cần' ) as $val => $lab ) {
+			echo '<option value="' . esc_attr( $val ) . '"' . selected( $dp, $val, false ) . '>' . esc_html( $lab ) . '</option>';
+		}
+		echo '</select></td></tr>';
 		$s = $m( 'status' ) ?: 'new';
 		echo '<tr><th>Trạng thái</th><td><select name="va_status">';
 		foreach ( array( 'new' => 'Mới', 'contacted' => 'Đã liên hệ', 'done' => 'Xong' ) as $val => $lab ) {
@@ -343,6 +364,10 @@ add_action( 'save_post_va_booking', function ( $id ) {
 	$s = isset( $_POST['va_status'] ) ? sanitize_key( wp_unslash( $_POST['va_status'] ) ) : 'new';
 	if ( in_array( $s, array( 'new', 'contacted', 'done' ), true ) ) {
 		update_post_meta( $id, '_va_status', $s );
+	}
+	$dp = isset( $_POST['va_deposit'] ) ? sanitize_key( wp_unslash( $_POST['va_deposit'] ) ) : '';
+	if ( in_array( $dp, array( 'pending', 'paid', 'none' ), true ) ) {
+		update_post_meta( $id, '_va_deposit', $dp );
 	}
 	if ( empty( $_POST['va'] ) || ! is_array( $_POST['va'] ) ) {
 		return;

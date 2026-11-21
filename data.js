@@ -24,6 +24,16 @@ const SALON = {
    cats: nhóm dịch vụ có tại chi nhánh (dùng để lọc ô chọn dịch vụ khi đặt lịch) */
 /* Form "Free consultation": dán link nhận form vào đây (VD https://formsubmit.co/ajax/email-cua-tiem
    hoặc link Formspree). Để trống thì khách gửi bằng tin nhắn SMS tới số của Vi. */
+/* Đặt cọc giữ chỗ: điền tài khoản của tiệm vào đây. Ô nào để trống sẽ không hiện trên web.
+   zelle: số điện thoại hoặc email đăng ký Zelle · venmo: tên Venmo (không cần @) · cashapp: $cashtag (không cần $) */
+const DEPOSIT = {
+  amount: 25,
+  zelle: "(857) 218-8777",
+  zelleName: "",
+  venmo: "Vi-LeElina",
+  cashapp: ""
+};
+
 const CONSULT_ENDPOINT = "https://vangelbeauty.com/?rest_route=/vangel/v1/submit";
 
 const LOCATIONS = [
