@@ -1,15 +1,55 @@
 /* ===== Dat coc ===== */
 .book-form__deposit { margin: 0; font-size: 13.5px; line-height: 1.55; background: #fbf5ee; border-left: 3px solid #c9a868; padding: 10px 12px; border-radius: 0 4px 4px 0; color: #4a4134; }
-.deposit { text-align: left; background: #fffaf3; border: 1px solid #c9a868; border-radius: 6px; padding: 16px; margin: 16px 0; }
-.deposit__title { margin: 0 0 12px; font: 600 12px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #8a6a35; }
-.deposit__list { display: grid; gap: 10px; }
-.deposit__btn { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; padding: 12px 14px; border-radius: 6px; border: 1px solid #e6dccb; background: #fff; color: #1d1a16; text-decoration: none; }
-.deposit__btn strong { font-size: 15px; }
-.deposit__btn span { grid-column: 1; font-size: 13px; color: #6b5f4d; word-break: break-all; }
-a.deposit__btn { position: relative; }
-a.deposit__btn:hover { border-color: #c9a868; }
-.deposit__btn--venmo strong { color: #008cff; } .deposit__btn--cash strong { color: #00a843; } .deposit__btn--zelle strong { color: #6d1ed4; }
-.deposit__btn--zelle .deposit__copy { grid-column: 2; grid-row: 1 / span 2; }
-.deposit__copy { border: 1px solid #c9a868; background: #fff; color: #8a6a35; border-radius: 999px; padding: 4px 12px; font: 600 11px var(--sans); letter-spacing: .08em; cursor: pointer; }
-.deposit__memo { margin: 12px 0 6px; font-size: 13px; color: #4a4134; }
-.deposit__fine { margin: 0; font-size: 12px; color: #8b7d68; }
+.deposit__copy { border: 1px solid #c9a868; background: #fff; color: #8a6a35; border-radius: 999px; padding: 5px 14px; font: 600 11px var(--sans); letter-spacing: .08em; cursor: pointer; white-space: nowrap; }
+.deposit__copy:hover { background: #c9a868; color: #fff; }
+/* Cua so dat coc rieng */
+.dep .dep__box { max-width: 480px; width: 100%; padding: 0; overflow: hidden; border-radius: 10px; background: #fffaf3; max-height: calc(100vh - 40px); overflow-y: auto; }
+.dep .modal__close { color: #fff; z-index: 2; }
+.dep__head { background: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(201,162,39,.28), transparent 70%), #111; color: #e7dccb; text-align: center; padding: 30px 26px 24px; }
+.dep__ok { display: inline-block; margin: 0 0 12px; padding: 5px 12px; border-radius: 999px; background: rgba(0,163,42,.15); color: #7ee39a; font: 600 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+.dep__head h3 { margin: 0 0 8px; color: #fff; font-weight: 400; font-size: 28px; line-height: 1.2; }
+.dep__head h3 em { color: #e7c98f; font-style: normal; }
+.dep__sum { margin: 0; font-size: 13.5px; color: #bdb4a4; }
+.dep__main { padding: 22px 24px 24px; }
+.dep__step { margin: 0 0 12px; font: 600 11px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #8a6a35; }
+.dep__list { display: grid; gap: 10px; }
+.dep__opt { display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #e6dccb; border-radius: 10px; background: #fff; color: #1d1a16; text-decoration: none; transition: border-color .2s, box-shadow .2s; }
+a.dep__opt:hover { border-color: #c9a868; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+.dep__logo { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; color: #fff; font: 700 20px var(--sans); }
+.dep__opt--venmo .dep__logo { background: #008cff; } .dep__opt--cash .dep__logo { background: #00c244; } .dep__opt--zelle .dep__logo { background: #6d1ed4; }
+.dep__info { display: grid; line-height: 1.3; }
+.dep__info strong { font-size: 16px; } .dep__info small { font-size: 13px; color: #6b5f4d; }
+.dep__go { font: 600 12px var(--sans); letter-spacing: .06em; color: #fff; background: #111; padding: 8px 12px; border-radius: 999px; white-space: nowrap; }
+.dep__memo { margin: 16px 0 10px; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; background: #fbf5ee; border: 1px dashed #c9a868; border-radius: 8px; padding: 10px 12px; }
+.dep__memo span { grid-column: 1; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: #8a6a35; }
+.dep__memo strong { grid-column: 1; font-size: 14px; color: #1d1a16; }
+.dep__memo .deposit__copy { grid-column: 2; grid-row: 1 / span 2; }
+.dep__fine { margin: 0 0 16px; font-size: 12.5px; line-height: 1.6; color: #6b5f4d; }
+.dep__fine a { color: #9a7a40; font-weight: 600; }
+.dep__done { width: 100%; justify-content: center; }
+@media (max-width: 760px) { .dep .dep__box { max-height: 92vh; border-radius: 14px 14px 0 0; } .dep__head h3 { font-size: 24px; } }
+.dep__callback { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: start; background: #111; color: #e7dccb; border-radius: 10px; padding: 14px 16px; margin: 4px 0 12px; }
+.dep__callback-ico { width: 38px; height: 38px; border-radius: 50%; background: #c9a868; color: #111; display: grid; place-items: center; font-size: 18px; }
+.dep__callback p { margin: 0; font-size: 14px; line-height: 1.55; }
+.dep__callback strong { display: block; color: #e7c98f; font: 600 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 3px; }
+
+/* ===== Dong y chinh sach coc ===== */
+.book-policy[hidden], #bookForm[hidden] { display: none !important; }
+.book-policy { display: grid; gap: 12px; margin-top: 8px; }
+.book-policy__lead { margin: 0; font: 600 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #8a6a35; }
+.book-policy__item { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; padding: 14px 16px; border: 1.5px solid #e6dccb; border-radius: 10px; background: #fffaf3; cursor: pointer; font-size: 14.5px; line-height: 1.6; color: #2c261e; transition: border-color .2s, background .2s; text-transform: none; letter-spacing: 0; }
+.book-policy__item:has(input:checked) { border-color: #00a32a; background: #f2fbf4; }
+.book-policy__chk { width: 20px; height: 20px; margin: 2px 0 0; accent-color: #00a32a; cursor: pointer; }
+.book-policy__go { margin-top: 4px; width: 100%; padding: 15px 20px; border: 0; border-radius: 999px; font: 600 14px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #fff; background: #00a32a; cursor: pointer; transition: background .2s, opacity .2s; }
+.book-policy__go:hover:not(:disabled) { background: #008a23; }
+.book-policy__go:disabled { background: #cfc8bd; color: #f7f3ec; cursor: not-allowed; }
+
+/* ===== Tab uu dai 50% / 40% + before-after 3 cot ===== */
+@media (max-width: 760px) {
+  body[data-page="home"] .sidetab { top: 50% !important; transform: translateY(-50%); }
+  .sidetab .sidetab__btn { font-size: 14px; padding: 16px 11px; font-weight: 600; letter-spacing: .04em; }
+  .sidetab .sidetab__btn--2 { margin-top: 0; border-top: 1px solid #eee; background: #111; color: #e7c98f; }
+  .sidetab .sidetab__btn:first-of-type { border-radius: 0; }
+}
+.gallery[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 560px) { .gallery[data-cols="3"] { grid-template-columns: repeat(2, 1fr); } }

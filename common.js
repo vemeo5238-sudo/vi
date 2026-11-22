@@ -30,7 +30,7 @@ const NAV = [
 
 $("#site-header").outerHTML = `
   <div class="announce">
-    First Visit Special: <strong>40% off</strong> your first facial
+    Holiday Special: <strong>50% off PMU</strong> · <strong>40% off</strong> facials, lashes &amp; brow lamination
     <a href="#" data-book>Book now →</a>
   </div>
   <header class="header" id="top">
@@ -157,9 +157,16 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
       <button class="modal__close" aria-label="Close" data-close>×</button>
       <p class="eyebrow eyebrow--gold">V Angel</p>
       <h2 id="bookTitle">Book an appointment</h2>
-      <form id="bookForm" class="book-form">
+      <div class="book-policy" id="bookPolicy">
+        <p class="book-policy__lead">Please read and tick both boxes to continue</p>
+        <label class="book-policy__item"><input type="checkbox" class="book-policy__chk"><span>Thank you for choosing V-Angel Beauty! ❤️ To secure your appointment, a deposit is required at the time of booking. Your appointment will only be confirmed once we have received your deposit.</span></label>
+        <label class="book-policy__item"><input type="checkbox" class="book-policy__chk"><span>Your deposit is required to confirm and secure your appointment. You may reschedule by notifying us in advance. However, deposits are non-refundable if you cancel without prior notice or fail to show up for your appointment. Thank you for your understanding! ❤️</span></label>
+        <button type="button" class="book-policy__go" id="bookPolicyGo" disabled>I agree — Continue</button>
+      </div>
+      <form id="bookForm" class="book-form" hidden>
         <label>Full name<input type="text" name="name" required /></label>
         <label>Phone number<input type="tel" name="phone" required pattern="[0-9 +.\(\)\-]{9,20}" /></label>
+        <label>Email<input type="email" name="email" required autocomplete="email" placeholder="you@example.com" /></label>
         <label>Location<select name="branch" id="branchSelect" required>
           ${LOCATIONS.map(l => `<option value="${l.id}">${l.name} — ${l.address}</option>`).join("")}
         </select></label>
@@ -173,14 +180,13 @@ $("#site-footer").outerHTML = (PAGE === "salon" ? "" : `
         </div>
         <label>Notes<textarea name="note" rows="2" placeholder="Skin concerns, lash or nail style you'd like…"></textarea></label>
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
-        <p class="book-form__deposit">A $${DEPOSIT.amount} deposit holds your appointment and is applied to your service total. You'll see how to pay after you send your request.</p>
+        <p class="book-form__deposit">A $${DEPOSIT.amount} deposit holds your appointment and is applied to your service total. You'll see how to pay after you send your request. Once we receive your deposit, our team will call you to confirm.</p>
         <p class="book-form__err" id="bookErr" role="alert" hidden></p>
         <button type="submit" class="btn btn--gold btn--block">Request appointment</button>
       </form>
       <div class="modal-done" id="bookDone" hidden>
         <h3>Thank you!</h3>
         <p>We've received your request and will call to confirm as soon as possible. Need it sooner? Nails: <a href="tel:${SALON.phoneLink}">${SALON.phone}</a> · Vi: <a href="tel:${SALON.ownerLink}">${SALON.owner}</a></p>
-        <div class="deposit" id="depositBox" hidden></div>
         <button class="btn btn--outline" data-close>Close</button>
       </div>
     </div>
@@ -311,13 +317,21 @@ $("#bookDate").min = new Date().toISOString().split("T")[0];
 
 function lockScroll(on) { document.body.style.overflow = on ? "hidden" : ""; }
 function openBook(service, branch) {
-  bookForm.hidden = false; bookDone.hidden = true; bookForm.reset();
+  bookForm.hidden = true; bookDone.hidden = true; bookForm.reset();
+  const pol = $("#bookPolicy");
+  pol.hidden = false; $$(".book-policy__chk", pol).forEach(x => (x.checked = false)); $("#bookPolicyGo").disabled = true;
   branchSelect.value = branch || branchFor(service) || LOCATIONS[0].id;
   fillServices(branchSelect.value, service);
   modal.classList.add("is-open"); modal.setAttribute("aria-hidden", "false"); lockScroll(true);
   if (typeof refreshTaken === "function") refreshTaken();
-  setTimeout(() => $("input", bookForm).focus(), 50);
 }
+$("#bookPolicy").addEventListener("change", () => {
+  $("#bookPolicyGo").disabled = !$$(".book-policy__chk", $("#bookPolicy")).every(x => x.checked);
+});
+$("#bookPolicyGo").addEventListener("click", () => {
+  $("#bookPolicy").hidden = true; bookForm.hidden = false;
+  setTimeout(() => $("input", bookForm).focus(), 50);
+});
 function closeBook() { modal.classList.remove("is-open"); modal.setAttribute("aria-hidden", "true"); lockScroll(false); }
 
 /* Gửi lịch hẹn về WordPress (plugin V Angel Bookings): lưu khách + email báo cho tiệm */
@@ -330,7 +344,7 @@ bookForm.addEventListener("submit", async e => {
   const loc = LOCATIONS.find(l => l.id === d.branch);
   btn.disabled = true; const label = btn.textContent; btn.textContent = "Sending…";
   try {
-    const body = new URLSearchParams({ kind: "booking", name: d.name || "", phone: d.phone || "", service: d.service || "",
+    const body = new URLSearchParams({ kind: "booking", name: d.name || "", phone: d.phone || "", email: d.email || "", service: d.service || "",
       location: loc ? loc.name : (d.branch || ""), date: d.date || "", time: d.time || "", message: d.note || "", page: location.href });
     const r = await fetch(CONSULT_ENDPOINT, { method: "POST", body });
     const j = await r.json().catch(() => ({}));
@@ -649,30 +663,52 @@ document.addEventListener("click", e => {
 
 /* ---------- Đặt cọc qua Zelle / Venmo / Cash App ---------- */
 function showDeposit(d) {
-  const box = $("#depositBox");
-  if (!box || typeof DEPOSIT === "undefined") return;
+  if (typeof DEPOSIT === "undefined") return;
   const amt = DEPOSIT.amount;
   const memo = `${(d.name || "").trim() || "Client"} ${d.date || ""} ${d.service || ""}`.replace(/\s+/g, " ").trim();
   const rows = [];
   if (DEPOSIT.venmo) {
     const u = DEPOSIT.venmo.replace(/^@/, "");
-    rows.push(`<a class="deposit__btn deposit__btn--venmo" target="_blank" rel="noopener" href="https://venmo.com/u/${encodeURIComponent(u)}?txn=pay&amount=${amt}&note=${encodeURIComponent("Deposit: " + memo)}"><strong>Venmo</strong><span>@${u}</span></a>`);
+    rows.push(`<a class="dep__opt dep__opt--venmo" target="_blank" rel="noopener" href="https://venmo.com/u/${encodeURIComponent(u)}?txn=pay&amount=${amt}&note=${encodeURIComponent("Deposit: " + memo)}">
+      <span class="dep__logo">V</span><span class="dep__info"><strong>Venmo</strong><small>@${u}</small></span><span class="dep__go">Pay $${amt} →</span></a>`);
   }
   if (DEPOSIT.cashapp) {
     const t = DEPOSIT.cashapp.replace(/^\$/, "");
-    rows.push(`<a class="deposit__btn deposit__btn--cash" target="_blank" rel="noopener" href="https://cash.app/$${encodeURIComponent(t)}/${amt}"><strong>Cash App</strong><span>$${t}</span></a>`);
+    rows.push(`<a class="dep__opt dep__opt--cash" target="_blank" rel="noopener" href="https://cash.app/$${encodeURIComponent(t)}/${amt}">
+      <span class="dep__logo">$</span><span class="dep__info"><strong>Cash App</strong><small>$${t}</small></span><span class="dep__go">Pay $${amt} →</span></a>`);
   }
   if (DEPOSIT.zelle) {
-    rows.push(`<div class="deposit__btn deposit__btn--zelle"><strong>Zelle</strong><span>${DEPOSIT.zelle}${DEPOSIT.zelleName ? " · " + DEPOSIT.zelleName : ""}</span><button type="button" class="deposit__copy" data-copy="${DEPOSIT.zelle}">Copy</button></div>`);
+    rows.push(`<div class="dep__opt dep__opt--zelle">
+      <span class="dep__logo">Z</span><span class="dep__info"><strong>Zelle</strong><small>${DEPOSIT.zelle}${DEPOSIT.zelleName ? " · " + DEPOSIT.zelleName : ""}</small></span><button type="button" class="deposit__copy" data-copy="${DEPOSIT.zelle}">Copy</button></div>`);
   }
-  if (!rows.length) { box.hidden = true; return; }
-  box.innerHTML = `
-    <p class="deposit__title">Pay your $${amt} deposit to hold your spot</p>
-    <div class="deposit__list">${rows.join("")}</div>
-    <p class="deposit__memo">Please add this note to your payment: <strong>${memo}</strong> <button type="button" class="deposit__copy" data-copy="${memo}">Copy</button></p>
-    <p class="deposit__fine">Your deposit is applied to your service total. We'll confirm your appointment once it arrives.</p>`;
-  box.hidden = false;
+  if (!rows.length) return;
+  let m = $("#depModal");
+  if (!m) {
+    m = document.createElement("div");
+    m.className = "modal dep"; m.id = "depModal"; m.setAttribute("aria-hidden", "true");
+    m.innerHTML = '<div class="modal__backdrop" data-dep-close></div><div class="modal__box dep__box" role="dialog" aria-modal="true" aria-labelledby="depTitle"><button class="modal__close" aria-label="Close" data-dep-close>×</button><div id="depBody"></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener("click", e => { if (e.target.closest("[data-dep-close]")) closeDep(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && m.classList.contains("is-open")) closeDep(); });
+  }
+  $("#depBody").innerHTML = `
+    <div class="dep__head">
+      <p class="dep__ok">✓ Request received</p>
+      <h3 id="depTitle">Hold your spot with a <em>$${amt}</em> deposit</h3>
+      <p class="dep__sum">${d.service || ""}${d.date ? " · " + d.date : ""}${d.time ? " · " + d.time : ""}</p>
+    </div>
+    <div class="dep__main">
+      <p class="dep__step">Choose how to pay</p>
+      <div class="dep__list">${rows.join("")}</div>
+      <div class="dep__memo"><span>Add this note to your payment</span><strong>${memo}</strong><button type="button" class="deposit__copy" data-copy="${memo}">Copy</button></div>
+      <div class="dep__callback"><span class="dep__callback-ico" aria-hidden="true">☎</span><p><strong>What happens next</strong>Once we receive your deposit, our team will call you to confirm your appointment.</p></div>
+      <p class="dep__fine">Your deposit is applied to your service total. Questions? Call or text Vi <a href="tel:+18572188777">(857) 218-8777</a>.</p>
+      <button type="button" class="btn btn--gold dep__done" data-dep-close>Done</button>
+    </div>`;
+  closeBook();
+  m.classList.add("is-open"); m.setAttribute("aria-hidden", "false"); lockScroll(true);
 }
+function closeDep() { const m = $("#depModal"); if (!m) return; m.classList.remove("is-open"); m.setAttribute("aria-hidden", "true"); lockScroll(false); }
 document.addEventListener("click", e => {
   const b = e.target.closest(".deposit__copy");
   if (!b) return;

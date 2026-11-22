@@ -256,10 +256,10 @@ const REVIEWS = [
 
 /* ---------- Điểm nổi bật (trang Salon) ---------- */
 const OFFERS = [
-  { big: "40% OFF", title: "First Visit Special", sub: "Your first facial at V Angel" },
+  { big: "50% OFF", title: "PMU & Brows", sub: "Ombre, combo & nano brows", book: "Combo Brows" },
+  { big: "40% OFF", title: "Facial · Lash · Brow Lamination", sub: "Holiday special at V Angel", book: "" },
   { big: "$220+", title: "Platinum Collection", sub: "4 luxury facial packages, 75–120 min" },
-  { big: "$15", title: "LED Light Therapy", sub: "Add-on for any facial treatment" },
-  { big: "$18+", title: "Kid Menu", sub: "Manicures and pedicures for kids" }
+  { big: "$15", title: "LED Light Therapy", sub: "Add-on for any facial treatment" }
 ];
 
 /* ---------- Câu hỏi thường gặp (trang Salon) ---------- */
@@ -288,6 +288,7 @@ const LABELS = { facial: "Facial", lash: "Lash", brow: "Brow", pmu: "PMU & Brows
 /* ---------- Thư viện ảnh (thư mục images/gallery) ---------- */
 const GALLERY = {
   results: [
+    ["result-6", "Skin Transformation — ICD Radiansome™100, after 2 months"],
     ["result-1", "Real Results — after a facial + 2 weeks of home care"],
     ["result-2", "The Eye Ritual — a smoother-looking eye area"],
     ["result-3", "Visible Clarity — clearer-looking skin"],
